@@ -18,8 +18,9 @@ fi
 
 # Installing git completion
 echo ''
-echo "Now installing git and bash-completion..."
-sudo apt-get install git bash-completion -y
+sudo add-apt-repository ppa:neovim-ppa/unstable
+echo "Now installing git and bash-completion... ccze - log colarised ... toilet - ascii-gen ..lolcat - color cut"
+sudo apt-get install git bash-completion ccze toilet lolcat neovim -y
 
 echo ''
 echo "Now configuring git-completion..."
@@ -116,6 +117,7 @@ wget https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolor
 mv dircolors.256dark .dircolors
 
 
+
 # Pull down personal dotfiles
 echo ''
 read -p "Do you want to use jldeen's dotfiles? y/n" -n 1 -r
@@ -124,13 +126,13 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     echo ''
 	echo "Now pulling down jldeen dotfiles..."
-	git clone https://github.com/jldeen/dotfiles.git ~/.dotfiles
+	git clone https://github.com/grokon/dotfiles.git ~/.dotfiles
 	echo ''
 	cd $HOME/.dotfiles && echo "switched to .dotfiles dir..."
 	echo ''
-	echo "Checking out wsl-dev branch..." && git checkout wsl-dev
-	echo ''
-	echo "Now configuring symlinks..." && $HOME/.dotfiles/script/bootstrap
+	#echo "Checking out wsl-dev branch..." && git checkout wsl-dev
+	#echo ''
+	echo "Now configuring symlinks..." && $HOME/.dotfiles/script/bootstrap.sh
     if [[ $? -eq 0 ]]
     then
         echo "Successfully configured your environment with jldeen's dotfiles..."
@@ -150,3 +152,54 @@ else
 	echo "source $HOME/.git-completion.bash" >> ${ZDOTDIR:-$HOME}/.bashrc && echo "added git-completion to .bashrc..."
 	
 fi
+
+
+# Set default shell to zsh
+echo ''
+read -p "Do you want to change your default shell? y/n" -n 1 -r
+echo ''
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo "Now setting default shell..."
+    chsh -s $(which zsh)
+    if [[ $? -eq 0 ]]
+    then
+        echo "Successfully set your default shell to zsh..."
+    else
+        echo "Default shell not set successfully..." >&2
+fi
+else 
+    echo "You chose not to set your default shell to zsh. Exiting now..."
+fi
+
+echo ''
+echo '	Badass WSL terminal installed! Please reboot your computer for changes to be made.'
+
+
+
+
+
+# Tmux plugin magager install run after symlink
+if [ test ! -d "~/.tmux/plugins/tpm" ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins
+fi 
+
+
+
+if not functions -q fisher
+    set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
+    curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
+    fish -c fisher
+end
+
+
+
+ln -s ~/.dofiles/.config/fish ~/.config/fish
+
+sudo update-alternatives --install /usr/bin/lua lua-interpreter \
+/usr/bin/lua5.3 130 --slave /usr/share/man/man1/lua.1.gz \
+lua-manual /usr/share/man/man1/lua5.3.1.gz
+
+sudo update-alternatives --install /usr/bin/luac lua-compiler \
+/usr/bin/luac5.3 130 --slave /usr/share/man/man1/luac.1.gz \
+lua-compiler-manual /usr/share/man/man1/luac5.3.1.gz

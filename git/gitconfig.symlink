@@ -1,0 +1,62 @@
+[include]
+        path = ~/.gitconfig.local
+
+[core]
+        autocrlf = input
+        safecrlf = true
+        editor = vim
+        filemode = true
+	logallrefupdates = true
+
+[help]
+        autocorrect = 1
+        browser = gitscm
+
+[alias]
+        st = status
+        co = checkout
+        ci = commit
+        ca = commit --reset-author --amend
+        unmodify = checkout --
+        unstage = reset HEAD --
+        br = branch
+        last = log -1 --format=fuller HEAD
+        hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+        type = cat-file -t
+        dump = cat-file -p
+        tag-list = tag -l -n1
+        show-names = show --name-only
+
+[color]
+        ui = true
+        diff = auto
+        status = auto
+        branch = auto
+
+[credential]
+        helper = cache --timeout=3600
+
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+
+[apply]
+        whitespace = nowarn
+
+[push]
+        default = current
+
+[diff]
+	renames = copies
+	mnemonicprefix = true
+
+[difftool]
+        prompt = false
+
+[browser "gitscm"]
+	cmd = /bin/sh -c 'open http://git-scm.com/docs/$(basename $1 .html)' --
+	protocol = https
+
+[log]
+        decorate = full

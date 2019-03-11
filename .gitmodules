@@ -1,0 +1,3 @@
+[submodule ".config/z.lua"]
+	path = .config/z.lua
+	url = https://github.com/skywind3000/z.lua.git
