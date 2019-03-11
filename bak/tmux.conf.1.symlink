@@ -1,0 +1,123 @@
+#  ██████████ ████     ████ ██     ██ ██     ██
+# ░░░░░██░░░ ░██░██   ██░██░██    ░██░░██   ██
+#     ░██    ░██░░██ ██ ░██░██    ░██ ░░██ ██
+#     ░██    ░██ ░░███  ░██░██    ░██  ░░███
+#     ░██    ░██  ░░█   ░██░██    ░██   ██░██
+#     ░██    ░██   ░    ░██░██    ░██  ██ ░░██
+#     ░██    ░██        ░██░░███████  ██   ░░██
+#     ░░     ░░         ░░  ░░░░░░░  ░░     ░░
+#
+#  ▓▓▓▓▓▓▓▓▓▓
+# ░▓ author ▓ grokon
+# ░▓ mirror ▓ http://git.io/.gy
+# ░▓ source ▓ https://github.com/DoomHammer/dotfiles/blob/master/.tmux.conf
+# ░▓ File:  ▓ tmux.conf
+# ░▓        ▓ 
+# ░▓▓▓▓▓▓▓▓▓▓
+# ░░░░░░░░░░
+#
+# =============================================================== #
+
+
+# change prefix to Ctrl-a (like in gnu-screen)
+set -g prefix 'C-a'
+
+# screen mode
+set -g default-terminal "screen-256color"
+
+# force a reload of the config file
+bind-key R source-file ~/.tmux.conf \; display-message "tmux.conf reloaded."
+
+# TODO: This shadows the default paste-buffer binding; should fix that.
+bind-key ] send-prefix
+bind-key C-] last-window
+
+# history
+set-option -g history-limit 20000
+
+# Mouse support ---------------------------------------------------------- 
+set -g mouse on
+
+# Right click to paste from the clipboard
+# If you like middle click better, change MouseDown3Pane to MouseDown2Pane for middle click.
+unbind-key MouseDown3Pane
+bind-key -n MouseDown3Pane run "tmux set-buffer \"$(xclip -o -sel clipboard)\"; tmux paste-buffer"
+
+
+# Easy-to-remember window commands
+bind k confirm kill-window
+bind K confirm kill-server
+bind a last-window
+bind space command-prompt -p index "select-window"
+unbind &
+
+
+## Rename windows to fit current application
+setw -g automatic-rename off
+
+## List of plugins
+# For this to work you need to install https://github.com/tmux-plugins/tpm
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+# Those two allow continuous saving and restoring of tmux sessions
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+
+# Settings for tmux-recurrect:
+set -g @resurrect-save-bash-history 'on'
+set -g @resurrect-capture-pane-contents 'on'
+
+set -g @plugin 'tmux-plugins/tmux-continuum'
+# This one for easy opening of almost everything
+set -g @plugin 'jbnicolai/tmux-fpp'
+# Intuitive bindings for splitting panes
+set -g @plugin 'tmux-plugins/tmux-pain-control'
+# Integrations with system clipboard
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @yank_selection 'primary'
+set -g @yank_with_mouse on
+# Easier session management
+set -g @plugin 'tmux-plugins/tmux-sessionist'
+# Man in a split
+set -g @plugin 'knakayama/tmux-man'
+# Tmux Tasks
+set -g @plugin 'chriszarate/tmux-tasks'
+# Tmux current pane hostname/user
+set -g @plugin 'soyuka/tmux-current-pane-hostname'
+set -g status-right '#[fg=cyan,bold] #U@#H #[default]#[fg=blue]#(tmux display-message -p "#{pane_current_path}" | sed "s#$HOME#~#g") #[fg=red]%H:%M %d-%b-%y#[default]'
+set -g @plugin 'nhdaly/tmux-better-mouse-mode'
+set-option -g mouse on
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -se c -i"
+
+#  set -g @tpm_plugins '          \
+#    tmux-plugins/tpm             \
+#    chriszarate/tmux-tasks       \
+#    soyuka/tmux-current-pane-hostname     \
+#    christoomey/vim-tmux-navigator       \
+# '
+
+## Plugin configuration
+set -g @continuum-restore 'on'
+set -g @resurrect-capture-pane-contents 'on'
+
+set -g @man-size '40%'
+set -g @man-orientation 'h'
+set -g @man-shell-interactive 'off'
+
+## Windows style
+set-window-option -g window-style 'bg=#181818'
+set-window-option -g window-active-style 'bg=black'
+set-window-option -g pane-active-border-style ''
+
+## A bit more space in right status bar
+set -g status-right-length 50
+
+
+# Use zsh regardless of default settings
+if-shell 'test -x /usr/bin/zsh' 'set-option -g default-shell /usr/bin/zsh'
+if-shell 'test -x $BREW_PREFIX/bin/zsh' 'set-option -g default-shell $BREW_PREFIX/bin/zsh'
+
+# Version-specific configuration can be placed in ~/.tmux/${TMUX_VERSION}/*.conf
+run-shell "for conf in ~/.config/tmux/$(tmux -V | cut -d' ' -f2)/*.conf; do tmux source-file \"\$conf\"; done"
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'
