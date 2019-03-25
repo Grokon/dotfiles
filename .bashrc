@@ -964,7 +964,7 @@ fi
 
 if [ -f ~/.git-completion.bash ]; then
     source ~/.git-completion.bash
-    PS1=${PS1}'\[\033[37m\]\W\[\033[0m\]$(__git_ps1 " (\[\033[35m\]%s\[\033[0m\])") \$ '
+    PS1=${PS1}'$(__git_ps1 " (\[\033[35m\]%s\[\033[0m\])") \$ '
     GIT_PS1_SHOWDIRTYSTATE=1
     GIT_PS1_SHOWSTASHSTATE=1
     GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -977,3 +977,4 @@ fi
 # mode:shell-script
 # sh-shell:bash
 # End:
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

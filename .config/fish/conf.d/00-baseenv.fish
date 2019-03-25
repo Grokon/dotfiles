@@ -22,4 +22,15 @@ if not set -q WSL; and set -q WSLENV
   set -x DISPLAY ':0'
   set -x SHELL (command -v fish)
   set -x BROWSER 'powershell.exe Start'
+  set -x fish_emoji_width 2
 end
+
+
+# Load custom settings for current OS
+# set PLATFORM_SPECIFIC_FILE ~/.config/fish/(uname -s).fish
+# if test -f $PLATFORM_SPECIFIC_FILE
+#    . $PLATFORM_SPECIFIC_FILE
+# else
+#    echo Creating platform specific file: $PLATFORM_SPECIFIC_FILE
+#    touch $PLATFORM_SPECIFIC_FILE
+# end  
