@@ -1,0 +1,4 @@
+fish_variables
+plugin/completions/
+plugin/functions/
+plugin/conf.d/

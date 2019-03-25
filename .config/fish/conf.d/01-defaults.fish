@@ -8,8 +8,15 @@ set -q fish_initialized; and exit
 set -U fish_greeting
 
 # editor
-set -Ux VISUAL nvim
-set -Ux EDITOR $VISUAL
+if which nvim > /dev/null
+	set -Ux EDITOR nvim
+else
+	set -Ux EDITOR vim
+end
+
+set -gx CVSEDITOR $EDITOR
+set -gx SVN_EDITOR $EDITOR
+set -gx GIT_EDITOR $EDITOR
 
 # pager
 set -Ux PAGER less
@@ -23,6 +30,7 @@ set -Ux LESSHISTFILE $XDG_CACHE_HOME/lesshist
 # golang
 set -Ux GOENV_ROOT $XDG_DATA_HOME/goenv
 set -Ux GOPATH $XDG_DATA_HOME/go
+set -gx PATH $PATH $GOPATH/bin
 
 # node.js
 set -Ux NODENV_ROOT $XDG_DATA_HOME/nodenv
@@ -88,3 +96,22 @@ set -U FZF_PREVIEW_DIR_COMMAND 'ls'
 
 # local
 set -U FZF_BASE_OPTS "--height $FZF_TMUX_HEIGHT --no-bold"
+
+function fzf-history-widget
+    history | fzf -q (commandline) -e +m --tiebreak=index --sort \
+      --preview-window 'up:50%:wrap:hidden' \
+      --preview 'echo {}' \
+      --bind "left:execute(echo \" commandline {}\")+cancel+cancel" \
+      --bind "right:execute(echo \" commandline {}\")+cancel+cancel" \
+      --bind "del:execute(echo \" history delete {}\")+cancel+cancel" \
+      --bind "ctrl-x:execute(echo \" printf {} | xclip -sel clip\")+cancel+cancel" \
+      --bind "ctrl-a:toggle-preview" \
+      --bind "ctrl-e:execute(echo \" eval scd\")+cancel+cancel" \
+      --header "[⏎] run; [←] edit; [del] delete; Ctrl+X copy; Ctrl+A show full" | read -l result
+    and commandline $result
+    and commandline -f repaint
+    and commandline -f execute
+end
+
+# z
+set -gx Z_CMD "j"

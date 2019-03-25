@@ -1,0 +1,153 @@
+function fish_prompt --description "Write out the prompt"
+  printf '%s%s %s%s%s%s%s $' (set_color cyan) (whoami) (set_color yellow) (prompt_pwd) (parse_git_branch) (set_color yellow)
+  set_color normal
+  printf ' '
+end
+
+
+
+
+
+
+
+
+function parse_git_branch
+  # make sure git is installed
+  if not which -s git
+    return
+  end
+
+  # make sure the directory is a git repo
+  if not is-git
+    return
+  end
+
+  if has-git-changes
+    set_color red
+  else
+    set_color blue
+  end
+  echo -n ' /'
+  set -l branch (env git symbolic-ref -q HEAD)
+  if test ! -z "$branch"
+    echo -n $branch | sed -e 's/refs\/heads\///'
+  else
+    git name-rev --name-only HEAD ^/dev/null
+  end
+end
+
+
+function is-git
+  env git rev-parse --git-dir ^/dev/null >/dev/null
+end
+
+
+
+
+
+
+# name: clearance
+# ---------------
+# Based on idan. Display the following bits on the left:
+# - Virtualenv name (if applicable, see https://github.com/adambrenecki/virtualfish)
+# - Current directory name
+# - Git branch and dirty state (if inside a git repo)
+
+function _git_branch_name
+  echo (command git symbolic-ref HEAD 2> /dev/null | sed -e 's|^refs/heads/||')
+end
+
+function _git_is_dirty
+  echo (command git status -s --ignore-submodules=dirty 2> /dev/null)
+end
+
+function fish_prompt
+  set -l last_status $status
+
+  set -l cyan (set_color cyan)
+  set -l yellow (set_color yellow)
+  set -l red (set_color red)
+  set -l blue (set_color blue)
+  set -l green (set_color green)
+  set -l normal (set_color normal)
+
+  set -l cwd $blue(pwd | sed "s:^$HOME:~:")
+
+  # Output the prompt, left to right
+
+  # Add a newline before new prompts
+  echo -e ''
+
+  # Display [venvname] if in a virtualenv
+  if set -q VIRTUAL_ENV
+      echo -n -s (set_color -b cyan black) '[' (basename "$VIRTUAL_ENV") ']' $normal ' '
+  end
+
+  # Print pwd or full path
+  echo -n -s $cwd $normal
+
+  # Show git branch and status
+  if [ (_git_branch_name) ]
+    set -l git_branch (_git_branch_name)
+
+    if [ (_git_is_dirty) ]
+      set git_info '(' $yellow $git_branch "±" $normal ')'
+    else
+      set git_info '(' $green $git_branch $normal ')'
+    end
+    echo -n -s ' · ' $git_info $normal
+  end
+
+  set -l prompt_color $red
+  if test $last_status = 0
+    set prompt_color $normal
+  end
+
+  # Terminate with a nice prompt char
+  echo -e ''
+  echo -e -n -s $prompt_color '⟩ ' $normal
+end
+
+#--------------------------------------------------------------------------------------
+
+function fish_prompt
+  set -l status_copy $status
+
+  set -l red (set_color red)
+  set -l blue (set_color blue)
+  set -l green (set_color green)
+  set -l yellow (set_color yellow)
+  set -l normal (set_color normal)
+
+  if test 0 -eq (id -u "$USER")
+    echo -sn $red"#$normal "
+  else
+    set_color normal
+  end
+
+  if test "$PWD" = ~
+    echo -sn "~"
+  else
+    echo -sn (basename "$PWD")
+  end
+
+  if git_is_repo
+    set branch_name (git_branch_name)
+    set untracked (git_untracked_files)
+
+    set git_glyph ""
+    if git_is_dirty
+      set git_glyph $git_glyph$yellow"!"$normal
+    end
+    if test "$untracked" -gt 0
+      set git_glyph $git_glyph$blue"*"$normal
+    end
+    if git_is_staged
+      set git_glyph $git_glyph$green"+"$normal
+    end
+    echo -n " $branch_name$git_glyph"
+    echo -n $red(git_ahead "%" "%" "%%")$normal
+  end
+
+  echo " "
+end
