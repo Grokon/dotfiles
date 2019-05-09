@@ -70,3 +70,12 @@ $ curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgre
 $ sudo dpkg -i ripgrep_0.10.0_amd64.deb
 
 
+## Debian
+#Для Debian 9.0 запустите от имени root:
+echo 'deb http://download.opensuse.org/repositories/shells:/fish/Debian_9.0/ /' > /etc/apt/sources.list.d/shells:fish.list
+apt-get update
+apt-get install fish
+#Вы можете добавить ключ репозитория в apt. Имейте в виду, что владелец ключа может распространять обновления, пакеты и репозитории, которым ваша система будет доверять (подробнее). Для добавления ключа запустите:
+wget -nv https://download.opensuse.org/repositories/shells:fish/Debian_9.0/Release.key -O Release.key
+apt-key add - < Release.key
+apt-get update
