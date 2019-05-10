@@ -36,7 +36,7 @@ end
 
 
 
-ln -s ~/.dofiles/.config/fish ~/.config/fish
+ln -s ~/.dotfiles/.config/fish ~/.config/fish
 
 sudo update-alternatives --install /usr/bin/lua lua-interpreter \
 /usr/bin/lua5.3 130 --slave /usr/share/man/man1/lua.1.gz \
