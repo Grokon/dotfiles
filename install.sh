@@ -9,7 +9,7 @@ echo ''
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt-add-repository ppa:fish-shell/release-3
 echo "Now installing git and bash-completion... ccze - log colarised ... toilet - ascii-gen ..lolcat - color cut"
-sudo apt-get install git bash-completion ccze toilet lolcat neovim fish jq tmux -y
+sudo apt-get install git bash-completion ccze toilet lolcat neovim fish jq tmux lua5.3 -y
 
 echo ''
 echo "Now configuring git-completion..."
