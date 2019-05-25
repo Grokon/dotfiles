@@ -14,7 +14,7 @@ sudo apt-get install git bash-completion ccze toilet lolcat neovim fish jq tmux 
 echo ''
 echo "Now configuring git-completion..."
 GIT_VERSION=`git --version | awk '{print $3}'`
-URL="https://raw.github.com/git/git/v$GIT_VERSION/contrib/completion/git-completion.bash"
+URL="https://raw.githubusercontent.com/git/git/v$GIT_VERSION/contrib/completion/git-completion.bash"
 echo ''
 echo "Downloading git-completion for git version: $GIT_VERSION..."
 if ! curl "$URL" --silent --output "$HOME/.git-completion.bash"; then
