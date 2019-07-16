@@ -28,7 +28,7 @@ set -Ux LESSHISTFILE $XDG_CACHE_HOME/lesshist
 #
 
 # golang
-set -Ux GOENV_ROOT $XDG_DATA_HOME/goenv
+set -Ux GOENV_ROOT $XDG_DATA_HOME/.goenv/bin
 set -Ux GOPATH $XDG_DATA_HOME/go
 set -gx PATH $PATH $GOPATH/bin
 
