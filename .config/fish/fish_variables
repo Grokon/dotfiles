@@ -7,7 +7,7 @@ SETUVAR FZF_BASE_OPTS:\x2d\x2dheight\x2025\x25\x20\x2d\x2dno\x2dbold
 SETUVAR FZF_CD_COMMAND:fd\x20\x2d\x2dtype\x20directory\x20\x2d\x2dfollow
 SETUVAR FZF_CD_WITH_HIDDEN_COMMAND:fd\x20\x2d\x2dtype\x20directory\x20\x2d\x2dfollow\x20\x2d\x2dhidden\x20\x2d\x2dexclude\x20\x2egit
 SETUVAR --export FZF_DEFAULT_COMMAND:fd\x20\x2d\x2dtype\x20file\x20\x2d\x2dtype\x20symlink
-SETUVAR FZF_DEFAULT_OPTS:\x2d\x2dheight\x2025\x25
+SETUVAR --export FZF_DEFAULT_OPTS:\x2d\x2dheight\x2025\x25\x20\x2d\x2dno\x2dbold\x20\x2d\x2dcolor\x3dfg\x3a12\x2cbg\x3a8\x2chl\x3a7\x2cfg\x2b\x3a12\x2cbg\x2b\x3a0\x2chl\x2b\x3a5\x20\x2d\x2dcolor\x3dinfo\x3a6\x2cprompt\x3a12\x2cpointer\x3a15\x2cmarker\x3a15\x2cspinner\x3a6
 SETUVAR FZF_ENABLE_OPEN_PREVIEW:1
 SETUVAR FZF_FIND_FILE_COMMAND:fd\x20\x2d\x2dtype\x20file\x20\x2d\x2dtype\x20symlink
 SETUVAR FZF_LEGACY_KEYBINDINGS:0
@@ -20,7 +20,7 @@ SETUVAR FZF_TMUX:1
 SETUVAR FZF_TMUX_HEIGHT:25\x25
 SETUVAR --export GEM_SPEC_CACHE:/home/groky/\x2ecache/gem
 SETUVAR --export GNUPGHOME:/home/groky/\x2egnupg
-SETUVAR --export GOENV_ROOT:/home/groky/\x2elocal/share/goenv
+SETUVAR --export GOENV_ROOT:/home/groky/\x2elocal/share/\x2egoenv/bin
 SETUVAR --export --path GOPATH:/home/groky/\x2elocal/share/go
 SETUVAR --export HTTPIE_CONFIG_DIR:/home/groky/\x2econfig/httpie
 SETUVAR --export LESS:\x2d\x2dRAW\x2dCONTROL\x2dCHARS\x20\x2d\x2dtabs\x3d4
@@ -42,9 +42,29 @@ SETUVAR --export ZLUA_LUAEXE:/usr/bin/lua
 SETUVAR --export ZLUA_SCRIPT:/home/groky/\x2econfig/fisher/github\x2ecom/skywind3000/z\x2elua/z\x2elua
 SETUVAR --export _ZL_DATA:/home/groky/\x2elocal/share/zlua/zlua\x2etxt
 SETUVAR _ZL_DATA_DIR:/home/groky/\x2elocal/share/zlua
+SETUVAR __fish_git_prompt_char_cleanstate:\x2d
+SETUVAR __fish_git_prompt_char_dirtystate:\x7e
+SETUVAR __fish_git_prompt_char_invalidstate:\x23
+SETUVAR __fish_git_prompt_char_stagedstate:\x2b
+SETUVAR __fish_git_prompt_char_stashstate:\x24
+SETUVAR __fish_git_prompt_char_stateseperator:\x7c
+SETUVAR __fish_git_prompt_char_untrackedfiles:\x3f
+SETUVAR __fish_git_prompt_char_upstream_ahead:\x3e
+SETUVAR __fish_git_prompt_char_upstream_behind:\x3c
+SETUVAR __fish_git_prompt_char_upstream_equal:\x3d
+SETUVAR __fish_git_prompt_color_branch:\x23657b83\x1ebryellow
+SETUVAR __fish_git_prompt_color_cleanstate:\x23859900\x1egreen
+SETUVAR __fish_git_prompt_color_dirtystate:\x23268bd2\x1eblue
+SETUVAR __fish_git_prompt_color_invalidstate:\x23dc322f\x1ered
+SETUVAR __fish_git_prompt_color_stagedstate:\x23b58900\x1eyellow
+SETUVAR __fish_git_prompt_color_stashstate:\x232aa198\x1ecyan
+SETUVAR __fish_git_prompt_color_untrackedfiles:\x23d33682\x1emagenta
+SETUVAR __fish_git_prompt_describe_style:contains
+SETUVAR __fish_git_prompt_show_informative_status:1
+SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d
 SETUVAR __fish_init_3_x:\x1d
-SETUVAR _zlua_dir:/home/groky/\x2econfig/fisher/github\x2ecom/skywind3000/z\x2elua
+SETUVAR _zlua_dir:/home/groky/\x2econfig/fish/plugins/conf\x2ed
 SETUVAR fish_color_autosuggestion:normal
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:magenta
@@ -56,6 +76,7 @@ SETUVAR fish_color_error:red
 SETUVAR fish_color_escape:yellow\x1e\x2d\x2dbold
 SETUVAR fish_color_history_current:\x2d\x2dbold
 SETUVAR fish_color_host:normal
+SETUVAR fish_color_jobs:\x232aa198\x1ecyan
 SETUVAR fish_color_match:\x2d\x2dbackground\x3dblue
 SETUVAR fish_color_normal:normal
 SETUVAR fish_color_operator:yellow
@@ -66,11 +87,18 @@ SETUVAR fish_color_search_match:normal\x1e\x2d\x2dbackground\x3dwhite
 SETUVAR fish_color_selection:normal\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dblack
 SETUVAR fish_color_status:red
 SETUVAR fish_color_user:green
+SETUVAR fish_color_user_root:\x23dc322f\x1ered
 SETUVAR fish_color_valid_path:\x2d\x2dunderline
+SETUVAR fish_color_venv:\x23cb4b16\x1ebrred
 SETUVAR fish_greeting:\x1d
 SETUVAR fish_key_bindings:fish_default_key_bindings
 SETUVAR fish_pager_color_completion:\x1d
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:normal\x1e\x2d\x2dbackground\x3dcyan
+SETUVAR fish_prompt_pwd_dir_length:3
 SETUVAR fish_user_paths:/home/groky/\x2efzf/bin
+SETUVAR man_color_blink:\x23d33682\x1emagenta\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
+SETUVAR man_color_bold:\x23eee8d5\x1ewhite
+SETUVAR man_color_standout:\x2d\x2dreverse
+SETUVAR man_color_underline:\x23268bd2\x1eblue\x1e\x2d\x2dunderline
