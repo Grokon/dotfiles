@@ -1,4 +1,3 @@
 fish_variables
-plugin/completions/
-plugin/functions/
-plugin/conf.d/
+functions/fisher.fish
+functions/fzf_key_bindings.fish 
