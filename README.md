@@ -7,6 +7,20 @@ Future request....
 
 
 
+# Z.lua cheat-sheat
+
+```
+z foo       # cd to most frecent dir matching foo
+z foo bar   # cd to most frecent dir matching foo and bar
+z -r foo    # cd to the highest ranked dir matching foo
+z -t foo    # cd to most recently accessed dir matching foo
+z -l foo    # list matches instead of cd
+z -c foo    # restrict matches to subdirs of $PWD
+z -e foo    # echo the best match, don't cd
+z -i foo    # cd with interactive selection
+z -I foo    # cd with interactive selection using fzf
+z -b foo    # cd to the parent directory starting with foo
+```
 
 
 # Metadata and File Permissions

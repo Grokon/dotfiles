@@ -64,7 +64,7 @@ SETUVAR __fish_git_prompt_show_informative_status:1
 SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d
 SETUVAR __fish_init_3_x:\x1d
-SETUVAR _zlua_dir:/home/groky/\x2econfig/fish/plugins/conf\x2ed
+SETUVAR _zlua_dir:/home/groky/\x2econfig/fisher/github\x2ecom/skywind3000/z\x2elua
 SETUVAR fish_color_autosuggestion:normal
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:magenta
