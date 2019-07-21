@@ -7,7 +7,7 @@ Future request....
 
 
 
-# Z.lua cheat-sheat
+# [Z.lua cheat-sheat](https://github.com/skywind3000/z.lua)
 
 ```
 z foo       # cd to most frecent dir matching foo
