@@ -23,6 +23,15 @@ set -Ux PAGER less
 set -Ux LESS '--RAW-CONTROL-CHARS --tabs=4'
 set -Ux LESSHISTFILE $XDG_CACHE_HOME/lesshist
 
+# ssh-agent
+if test -z "$SSH_ENV"
+    set -gx SSH_ENV $HOME/.ssh/environment
+end
+
+if not __ssh_agent_is_started
+    __ssh_agent_start
+end
+
 #
 # toolchains
 #
