@@ -7,7 +7,7 @@ Future request....
 
 
 
-# Z.lua cheat-sheat
+# [Z.lua cheat-sheat](https://github.com/skywind3000/z.lua)
 
 ```
 z foo       # cd to most frecent dir matching foo
@@ -22,7 +22,7 @@ z -I foo    # cd with interactive selection using fzf
 z -b foo    # cd to the parent directory starting with foo
 ```
 
-# FZF keybinging (`<https://github.com/junegunn/fzf#key-bindings-for-command-line>`)
+# [FZF keybinging](https://github.com/junegunn/fzf#key-bindings-for-command-line)
 
 - `CTRL-T` - Paste the selected files and directories onto the command-line
     - Set `FZF_CTRL_T_COMMAND` to override the default command
