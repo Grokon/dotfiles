@@ -2,6 +2,7 @@
 edc/bass
 jethrokuan/fzf
 franciscolourenco/done
-tuvistavie/fish-kubectl
+#tuvistavie/fish-kubectl
+evanlucas/fish-kubectl-completions
 jethrokuan/z
 #skywind3000/z.lua
