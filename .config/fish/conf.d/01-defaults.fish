@@ -38,8 +38,10 @@ end
 
 # golang
 set -Ux GOENV_ROOT $XDG_DATA_HOME/.goenv/bin
-set -Ux GOPATH $XDG_DATA_HOME/go
-set -gx PATH $PATH $GOPATH/bin
+set -Ux GOROOT /usr/local/go
+#set -Ux GOPATH $XDG_DATA_HOME/go
+set -Ux GOPATH $HOME/go
+set -gx PATH $PATH $GOPATH/bin:$GOROOT/bin:$HOME/bin
 
 # node.js
 set -Ux NODENV_ROOT $XDG_DATA_HOME/nodenv
