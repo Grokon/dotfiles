@@ -91,3 +91,9 @@ echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/2/Deb
 wget -q -O - https://download.opensuse.org/repositories/shells:fish:release:2/Debian_9.0/Release.key | sudo apt-key add -
 sudo apt update
 sudo apt install fish
+
+
+
+
+#install GO / check version https://golang.org/dl/
+curl -s https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz | sudo tar xzf - -C /usr/local
