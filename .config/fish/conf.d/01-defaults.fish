@@ -4,6 +4,7 @@ set -q fish_initialized; and exit
 # core
 #
 
+set -U fish_user_paths $HOME/bin $fish_user_paths
 # fish
 set -U fish_greeting
 
@@ -41,7 +42,7 @@ set -Ux GOENV_ROOT $XDG_DATA_HOME/.goenv/bin
 set -Ux GOROOT /usr/local/go
 #set -Ux GOPATH $XDG_DATA_HOME/go
 set -Ux GOPATH $HOME/go
-set -gx PATH $PATH $GOPATH/bin:$GOROOT/bin:$HOME/bin
+set -gx PATH $PATH $GOPATH/bin:$GOROOT/bin
 
 # node.js
 set -Ux NODENV_ROOT $XDG_DATA_HOME/nodenv
