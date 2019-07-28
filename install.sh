@@ -96,4 +96,4 @@ sudo apt install fish
 
 
 #install GO / check version https://golang.org/dl/
-curl -s https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz | sudo tar xzf - -C /usr/local
+curl https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz | sudo tar xzf - -C /usr/local
