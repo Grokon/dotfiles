@@ -4,16 +4,28 @@ set -q fish_initialized; and exit
 # core
 #
 
-set -U fish_user_paths $HOME/bin $fish_user_paths
 # fish
 set -U fish_greeting
 
 # editor
 if which nvim > /dev/null
 	set -Ux EDITOR nvim
+  alias vi="nvim"
+  alias vim="nvim"
 else
 	set -Ux EDITOR vim
 end
+
+# exa
+if which exa > /dev/null
+  alias ls="exa"
+  alias l="exa -a"
+  alias ll="exa -lgh"
+  alias la="exa -lagh"
+  alias lt="exa -T"
+  alias lg="exa -lagh --git"
+end
+
 
 set -gx CVSEDITOR $EDITOR
 set -gx SVN_EDITOR $EDITOR
