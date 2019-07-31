@@ -26,6 +26,8 @@ if which exa > /dev/null
   alias lg="exa -lagh --git"
 end
 
+# docker
+set -gx DOCKER_HOST tcp://0.0.0.0:2375
 
 set -gx CVSEDITOR $EDITOR
 set -gx SVN_EDITOR $EDITOR
