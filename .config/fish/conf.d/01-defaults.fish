@@ -16,6 +16,8 @@ else
 	set -Ux EDITOR vim
 end
 
+set -gx PATH $HOME/bin $PATH
+
 # exa
 if which exa > /dev/null
   alias ls="exa"
@@ -27,7 +29,7 @@ if which exa > /dev/null
 end
 
 # docker
-set -gx DOCKER_HOST tcp://0.0.0.0:2375
+set -gx DOCKER_HOST tcp://localhost:2375
 
 set -gx CVSEDITOR $EDITOR
 set -gx SVN_EDITOR $EDITOR
