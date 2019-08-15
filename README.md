@@ -49,5 +49,5 @@ A problem with this approach is that your ssh keys need to be secured, but by de
 
 ```
 [automount]
-options = "metadata"
+options = "metadata,umask=22,fmask=11"
 ```
