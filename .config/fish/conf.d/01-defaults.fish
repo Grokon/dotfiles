@@ -143,3 +143,7 @@ end
 
 # z
 set -gx Z_CMD "j"
+
+# spacefish
+set SPACEFISH_PROMPT_ADD_NEWLINE false
+set SPACEFISH_PROMPT_SEPARATE_LINE false
