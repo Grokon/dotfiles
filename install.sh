@@ -67,7 +67,8 @@ function update-fzf --description "Installs or updates fzf"
   sudo -p "Root password to install fzf: " mv /tmp/fzf /usr/local/bin/fzf
 end
 
-
+# change def shell to fish
+chsh -s /usr/bin/fish
 
 # SpaceVim
 curl -sLf https://spacevim.org/install.sh | bash
