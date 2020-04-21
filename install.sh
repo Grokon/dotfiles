@@ -48,7 +48,7 @@ ln -s ~/.dotfiles/.config/fish ~/.config/fish
 ln -s ~/.dotfiles/bin/ ~/bin
 ln -s ~/.dotfiles/.gnupg/ ~/.gnupg
 ln -s ~/.dotfiles/git/.gitconfig ~/.gitconfig
-
+ln -s ~/.dotfiles/git/.gitignore ~/.gitignore
 ############
 #ln -s ~/.dotfiles/git/.gitconfig.local ~/.gitconfig.local
 ###############3
