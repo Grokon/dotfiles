@@ -42,8 +42,26 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 
 
 
-
+# Symlinks
 ln -s ~/.dotfiles/.config/fish ~/.config/fish
+
+ln -s ~/.dotfiles/bin/ ~/bin
+ln -s ~/.dotfiles/.gnupg/ ~/.gnupg
+ln -s ~/.dotfiles/git/.gitconfig ~/.gitconfig
+
+############
+#ln -s ~/.dotfiles/git/.gitconfig.local ~/.gitconfig.local
+###############3
+
+ln -s ~/.dotfiles/.bashrc ~/.bashrc
+ln -s ~/.dotfiles/.dircolors ~/.dircolors
+ln -s ~/.dotfiles/.myclirc ~/.myclirc
+ln -s ~/.dotfiles/.screenrc ~/.screenrc
+ln -s ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
+
+
+#################
+
 
 sudo update-alternatives --install /usr/bin/lua lua-interpreter \
 /usr/bin/lua5.3 130 --slave /usr/share/man/man1/lua.1.gz \
