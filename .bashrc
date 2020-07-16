@@ -75,24 +75,47 @@ export EDITOR="vim"
 
 ulimit -S -c 0      # Don't want coredumps.
 set -o notify
+# Prevent file overwrite on stdout redirection
+# Use `>|` to force redirection to an existing file
 set -o noclobber
 set -o ignoreeof
 
 
 # Enable options:
 shopt -s cdspell
+# This allows you to bookmark your favorite places across the file system
+# Define a variable containing a path and you will be able to cd into it regardless of the directory you're in
 shopt -s cdable_vars
 shopt -s checkhash
-shopt -s checkwinsize
+shopt -s checkwinsize   # Update window size after every command
 shopt -s sourcepath
 shopt -s no_empty_cmd_completion
-shopt -s cmdhist
+shopt -s cmdhist        # Save multi-line commands as one command
 shopt -s histappend histreedit histverify
 shopt -s extglob       # Necessary for programmable completion.
+
+shopt -s globstar 2> /dev/null  # Turn on recursive globbing (enables ** to recurse all directories)
+
+PROMPT_DIRTRIM=2        # Automatically trim long paths in the prompt (requires Bash 4.x)
 
 # Disable options:
 shopt -u mailwarn
 unset MAILCHECK        # Don't want my shell to warn me of incoming mail.
+
+
+## BETTER DIRECTORY NAVIGATION ##
+
+# Prepend cd to directory names automatically
+shopt -s autocd 2> /dev/null
+# Correct spelling errors during tab-completion
+shopt -s dirspell 2> /dev/null
+# Correct spelling errors in arguments supplied to cd
+shopt -s cdspell 2> /dev/null
+
+# This defines where cd looks for targets
+# Add the directories you want to have fast access to, separated by colon
+# Ex: CDPATH=".:~:~/projects" will look for targets in the current working directory, in home and in the ~/projects folder
+CDPATH="."
 
 
 #-------------------------------------------------------------
@@ -325,7 +348,7 @@ function job_color()
 
 
 # Now we construct the prompt.
-PROMPT_COMMAND="history -a"
+PROMPT_COMMAND="history -a"     # Record each line as it gets issued
 case ${TERM} in
   *term | xterm-* | rxvt | linux)
         #PS1="\[\$(load_color)\]\A\[${NC}\] "
@@ -349,9 +372,17 @@ esac
 
 
 export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
-export HISTIGNORE="&:bg:fg:ll:h"
+### History Settings
+# Huge history. Doesn't appear to slow things down, so why not?
+export HISTSIZE=500000
+export HISTFILESIZE=100000
+export HISTIGNORE="&:[ ]*:bg:fg:ll:h:history:clear:exit" # Don't record some commands
+# Use standard ISO 8601 timestamp
+# %F equivalent to %Y-%m-%d
+# %T equivalent to %H:%M:%S (24-hours format)
 export HISTTIMEFORMAT="$(echo -e ${BCyan})[%d/%m %H:%M:%S]$(echo -e ${NC}) "
-export HISTCONTROL=ignoredups
+# export HISTCONTROL=ignoredups
+export HISTCONTROL="erasedups:ignoreboth"  # Avoid duplicate entries
 export HOSTFILE=$HOME/.hosts    # Put a list of remote hosts in ~/.hosts
 
 
@@ -699,7 +730,24 @@ if [ "${BASH_VERSION%.*}" \< "3.0" ]; then
     return
 fi
 
-shopt -s extglob        # Necessary.
+# shopt -s extglob        # Necessary.
+
+
+## SMARTER TAB-COMPLETION (Readline bindings) ##
+
+# Perform file completion in a case insensitive fashion
+bind "set completion-ignore-case on"
+
+# Treat hyphens and underscores as equivalent
+bind "set completion-map-case on"
+
+# Display matches for ambiguous patterns at first tab press
+bind "set show-all-if-ambiguous on"
+
+# Immediately add a trailing slash when autocompleting symlinks to directories
+bind "set mark-symlinked-directories on"
+
+######
 
 complete -A hostname   rsh rcp telnet rlogin ftp ping disk
 complete -A export     printenv

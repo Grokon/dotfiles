@@ -1,0 +1,13 @@
+# vim: filetype=sh :
+
+export VIMINIT="let \$MYVIMRC='$SSHHOME/.sshrc.d/.vimrc' | source \$MYVIMRC"
+# do not use it! or you will setup all of vim plugins with dein.vim when type vim
+
+shopt -s expand_aliases
+
+export XDG_CONFIG_HOME="$SSHHOME/.sshrc.d/.config"
+
+. "$SSHHOME/.sshrc.d/.bashrc"
+# . "$SSHHOME/.sshrc.d/.aliases"
+# . "$SSHHOME/.sshrc.d/.functions"
+[[ "$(command -v prompts)" ]] && prompts

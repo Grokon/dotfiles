@@ -75,6 +75,8 @@ set -Ux PYLINTHOME $XDG_CACHE_HOME/pylint
 # ruby
 set -Ux RBENV_ROOT $XDG_DATA_HOME/rbenv
 set -Ux GEM_SPEC_CACHE $XDG_CACHE_HOME/gem
+set -Ux GEM_HOME $HOME/gems
+set -gx PATH $PATH $GEM_HOME/bin
 
 # rust
 set -Ux RUSTUP_HOME $XDG_DATA_HOME/rustup

@@ -28,6 +28,7 @@
         show-names = show --name-only
 
 [color]
+        all = true
         ui = true
         diff = auto
         status = auto
