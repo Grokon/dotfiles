@@ -10,7 +10,7 @@
 #  ▓▓▓▓▓▓▓▓▓▓
 # ░▓ author ▓ grokon
 # ░▓ code   ▓ http://
-# ░▓ mirror ▓ http://git.io/.dotfiles
+# ░▓ mirror ▓ http://git.io/JJGii
 # ░▓ File:  ▓ bashrc
 # ░▓▓▓▓▓▓▓▓▓▓
 # ░░░░░░░░░░
