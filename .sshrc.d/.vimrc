@@ -1,65 +1,106 @@
-"=========================="
-"-- Basic Configurations --"
-"=========================="
+  
+"           ██
+"          ░░
+"  ██    ██ ██ ██████████  ██████  █████
+" ░██   ░██░██░░██░░██░░██░░██░░█ ██░░░██
+" ░░██ ░██ ░██ ░██ ░██ ░██ ░██ ░ ░██  ░░
+"  ░░████  ░██ ░██ ░██ ░██ ░██   ░██   ██
+"   ░░██   ░██ ███ ░██ ░██░███   ░░█████
+"    ░░    ░░ ░░░  ░░  ░░ ░░░     ░░░░░
+"
+"  ▓▓▓▓▓▓▓▓▓▓
+" ░▓ author ▓ grokon
+" ░▓ code   ▓ http://
+" ░▓ mirror ▓ http://git.io/.gy
+" ░▓ File:  ▓ vimrc
+" ░▓▓▓▓▓▓▓▓▓▓
+" ░░░░░░░░░░
+"
 
+" use vim settings, rather than vi settings
+" must be first, because it changes other options as a side effect
 autocmd!
-set nocompatible " do not use vi compatible mode
+set nocompatible                                        " be iMproved (Must be first line)
 
-lang en_US.UTF-8
-set nu
-set title " display filename (not Thank you for using Vim.)
-set ruler " display ruler (60,7 13%)
-set showcmd " show inputting key
+" Windows Compatible {
+    " On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
+    " across (heterogeneous) systems easier.
+    if has('win32') || has('win64')
+        set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
+    else
+        set shell=/bin/bash
+    endif
+" }
 
-set hlsearch " highlight the search word
-set ignorecase
-set smartcase
 
-set clipboard=unnamed " sharing clipboard
-if has('termguicolors')
-    set termguicolors
-endif
-colorscheme desert
-set ambiwidth=double
+" ┏━┓┏━┓┏━┓╻┏━╸
+" ┣━┫┣━┫┗━┓┃┃  
+" ┗━┛╹ ╹┗━┛╹┗━╸
+" ----------------------------------------------------- {{{
 
-" indents and tabs
-set shiftwidth=4
-set autoindent
-set expandtab " convert tab to spaces
-set tabstop=4 " spaces number of tab
-set tw=0 " text width
-if version >=800 || has("nvim")
-    set breakindent
-endif
-set formatoptions=q
-autocmd FileType * setlocal formatoptions-=ro
+    lang en_US.UTF-8
+    set nu
+    set title                                           " display filename (not Thank you for using Vim.)
+    set ruler                                           " display ruler (60,7 13%)
+    set showcmd                                         " show inputting key
 
-set nobackup " do not create *~ files
-if version >= 703
-    set noundofile " do not create *.un~ files
-endif
-set backupskip=/tmp/*,/private/tmp/*
-set cmdheight=1
-set virtualedit=block
+    set incsearch                                       " do incremental searching
+    set hlsearch                                        " hilight searches by default
+    set ignorecase                                      " Case insensitive search - поиск без учёта регистра символов
+    set smartcase                                       " Case sensitive when uc present
 
-augroup HighlightTrailingSpaces
-    autocmd!
-    autocmd VimEnter,WinEnter,ColorScheme * highlight TrailingSpaces term=underline guibg=green ctermbg=green
-    autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
-augroup END
+    set clipboard=unnamed                               " sharing clipboard
+    if has('termguicolors')
+        set termguicolors
+    endif
+    colorscheme desert
+    set ambiwidth=double
 
-" complement { after Enter
-inoremap {<Enter> {}<Left><CR><ESC><S-o>
+    " indents and tabs
+    set shiftwidth=2                                    " размер отступов (нажатие на << или >>)
+    set expandtab                                       " tabs are spaces, not tabs - преобразовать табуляцию в пробелы
+    set tabstop=2                                       " an indentation every four columns - ширина табуляции
+    set softtabstop=2                                   " let backspace delete indent - ширина 'мягкого' таба
+    
+    set tw=0 " text width
+    if version >=800 || has("nvim")
+        set breakindent
+    endif
+    set formatoptions=q
+    autocmd FileType * setlocal formatoptions-=ro
 
-let g:python_host_prog = '/usr/local/bin/python'
-let g:python3_host_prog = '/usr/local/bin/python3'
+    set nobackup " do not create *~ files
+    if version >= 703
+        set noundofile " do not create *.un~ files
+    endif
+    set backupskip=/tmp/*,/private/tmp/*
+    set cmdheight=1
+    set virtualedit=block
 
-let g:loaded_ruby_provider = 1
-let g:loaded_node_provider = 1
+    augroup HighlightTrailingSpaces
+        autocmd!
+        autocmd VimEnter,WinEnter,ColorScheme * highlight TrailingSpaces term=underline guibg=green ctermbg=green
+        autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
+    augroup END
 
-"=====================================
-"-- dein.vim Configulation Section --
-"=====================================
+    " complement { after Enter
+    inoremap {<Enter> {}<Left><CR><ESC><S-o>
+
+    let g:python_host_prog = '/usr/local/bin/python'
+    let g:python3_host_prog = '/usr/local/bin/python3'
+
+    let g:loaded_ruby_provider = 1
+    let g:loaded_node_provider = 1
+
+" }}}
+
+" ┏━┓╺┳┓╺┳┓┏━┓┏┓╻┏━┓
+" ┣━┫ ┃┃ ┃┃┃ ┃┃┗┫┗━┓
+" ╹ ╹╺┻┛╺┻┛┗━┛╹ ╹┗━┛
+" ----------------------------------------------------- {{{
+
+" External Configurations {
+
 let s:dein_dir = expand('~/.vim/dein')
 let s:dein_repo = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 let s:dein_toml = s:dein_dir . '/rc/dein.toml'
