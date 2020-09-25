@@ -61,9 +61,15 @@ case "$LP_OS" in
 esac
 
 
-
 # Set main editor
-export EDITOR="vim"
+if $(type nvim &> /dev/null); then 
+    export EDITOR="vim"
+    alias vi="nvim"
+    alias vim="nvim"
+else
+    export EDITOR="vim"
+    alias vi="vim"
+fi
 
 #-------------------------------------------------------------
 # Some settings
@@ -78,7 +84,8 @@ set -o notify
 # Prevent file overwrite on stdout redirection
 # Use `>|` to force redirection to an existing file
 set -o noclobber
-set -o ignoreeof
+# Enable: 'Use "logout" to leave the shell'
+#set -o ignoreeof
 
 
 # Enable options:
@@ -175,11 +182,6 @@ NC=$CPR'[m'               # Color Reset
 
 
 
-
-
-
-
-
 ALERT=${BWhite}${On_Red} # Bold White on red background
 
 
@@ -191,11 +193,11 @@ if [ -x /usr/bin/fortune ]; then
     /usr/bin/fortune -s     # Makes our day a bit more fun.... :-)
 fi
 
-function _exit()              # Function to run upon exit of shell.
-{
-    echo -e "${BRed}Hasta la vista, baby${NC}"
-}
-trap _exit EXIT
+# function _exit()              # Function to run upon exit of shell.
+# {
+#     echo -e "${BRed}Hasta la vista, baby${NC}"
+# }
+# trap _exit EXIT
 
 #-------------------------------------------------------------
 # Shell Prompt - for many examples, see:
@@ -444,8 +446,6 @@ case "$LP_OS" in
 esac
 
 
-
-
 alias lx='ls -lXB'         #  Sort by extension.
 alias lk='ls -lSr'         #  Sort by size, biggest last.
 alias lt='ls -ltr'         #  Sort by date, most recent last.
@@ -459,6 +459,15 @@ alias lr='ll -R'           #  Recursive ls.
 alias la='ll -A'           #  Show hidden files.
 alias tree='tree -Csuh'    #  Nice alternative to 'recursive ls' ...
 
+# exa
+if [[ -x ~/bin/exa ]]; then 
+  alias ls="exa"
+  alias l="exa -a"
+  alias ll="exa -lgh"
+  alias la="exa -lagh"
+  alias lt="exa -T"
+  alias lg="exa -lagh --git"
+fi
 
 #-------------------------------------------------------------
 # Tailoring 'less'
@@ -710,7 +719,65 @@ function corename()   # Get name of app that created a corefile.
     done
 }
 
+#-------------------------------------------------------------
+# SSH agent:
+#-------------------------------------------------------------
+# Note: not sure who wrote this, but thank you
+# Note: ~/.ssh/environment should not be used, as it
+#       already has a different purpose in SSH.
+#set -x
+export SSH_ENV=$HOME/.ssh/agent.env
 
+# Note: Don't bother checking SSH_AGENT_PID. It's not used
+#       by SSH itself, and it might even be incorrect
+#       (for example, when using agent-forwarding over SSH).
+
+agent_is_running() {
+    if [ "$SSH_AUTH_SOCK" ]; then
+        # ssh-add returns:
+        #   0 = agent running, has keys
+        #   1 = agent running, no keys
+        #   2 = agent not running
+        ssh-add -l >/dev/null 2>&1 || [ $? -eq 1 ]
+    else
+        false
+    fi
+}
+
+agent_has_keys() {
+    ssh-add -l >/dev/null 2>&1
+}
+
+agent_load_env() {
+    . "$SSH_ENV" >/dev/null
+}
+
+agent_start() {
+    ssh-agent -s | sed 's/^echo/#echo/' > $SSH_ENV
+    chmod 600 $SSH_ENV
+    . $SSH_ENV > /dev/null
+}
+
+if ! agent_is_running; then
+    agent_load_env
+fi
+
+# if your keys are not stored in ~/.ssh/id_rsa or ~/.ssh/id_dsa, you'll need
+# to paste the proper path after ssh-add
+if ! agent_is_running; then
+    agent_start
+    ssh-add
+elif ! agent_has_keys; then
+    ssh-add
+fi
+
+unset SSH_ENV
+
+#-------------------------------------------------------------
+# FZF
+#-------------------------------------------------------------
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 #=========================================================================
 #
@@ -1025,4 +1092,3 @@ fi
 # mode:shell-script
 # sh-shell:bash
 # End:
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash

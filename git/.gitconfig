@@ -61,3 +61,5 @@
 
 [log]
         decorate = full
+[user]
+	name = Grokon
