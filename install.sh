@@ -62,7 +62,7 @@ ln -s ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
 
 ##################################### TEST ASDD
 
-DOTPATH="$HOME/dotfiles"
+DOTPATH="$HOME/.dotfiles"
 
 if [ ! -e "$DOTPATH" ]; then
   echo "Error: Directory $DOTPATH does not exist."
@@ -87,7 +87,7 @@ find "$DOTPATH/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$XDG_CONFIG_H
 
 # bin
 mkdir -p ~/bin
-find "$DOTPATH/bin/" -type f -perm 0755 -exec ln -fvns {} ~/bin/ \;
+find "$DOTPATH/bin/" -type f -perm 0755 -exec ln -fvns {} $HOME/bin/ \;
 
 #######################################################
 
