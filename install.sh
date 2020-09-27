@@ -1,4 +1,25 @@
 #!/bin/bash
+#  ██
+# 
+# ░██   ░██     ██
+# ░██   ░████   ██
+# ░██   ░██ ░██ ██
+# ░██   ░██  ░████
+# ░██   ░██   ░███ 
+# ░░░   ░░░    ░░░ stall
+#
+#  ▓▓▓▓▓▓▓▓▓▓
+# ░▓ author ▓ grokon
+# ░▓ code   ▓ https://git.io/JJGii
+# ░▓ File:  ▓ install.sh
+# ░▓▓▓▓▓▓▓▓▓▓
+# ░░░░░░░░░░
+#
+# =============================================================== #
+
+set -euo pipefail
+DOTPATH="$HOME/.dotfiles"
+[[ -z $XDG_CONFIG_HOME ]] && XDG_CONFIG_HOME=$HOME/.config
 
 # Update pkg lists
 echo "Updating package lists..."
@@ -6,10 +27,14 @@ sudo apt-get update
 
 # Installing git completion/ jq (lightweight and flexible command-line JSON processor)
 echo ''
+# latest neovim version
 sudo add-apt-repository ppa:neovim-ppa/unstable
+# latest fish version 
 sudo apt-add-repository ppa:fish-shell/release-3
+# latest git version
+sudo add-apt-repository ppa:git-core/ppa
 echo "Now installing git and bash-completion... ccze - log colarised ... toilet - ascii-gen ..lolcat - color cut"
-sudo apt-get install git bash-completion ccze toilet lolcat neovim fish jq tmux lua5.3 -y
+sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux -y
 
 echo ''
 echo "Now configuring git-completion..."
@@ -21,48 +46,50 @@ if ! curl "$URL" --silent --output "$HOME/.git-completion.bash"; then
 	echo "ERROR: Couldn't download completion script. Make sure you have a working internet connection." && exit 1
 fi
 
-# Tmux plugin magager install run after symlink
-if [ test ! -d "~/.tmux/plugins/tpm" ]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins
-fi 
-
-
-
-if not functions -q fisher
-    set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
-    curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
-    fish -c fisher
-end
-
-
 
 # install fzf
+echo ''
+echo "Install fzf..."
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
 
-
-# Symlinks
-ln -s ~/.dotfiles/.config/fish ~/.config/fish
-
-ln -s ~/.dotfiles/bin/ ~/bin
-ln -s ~/.dotfiles/.gnupg/ ~/.gnupg
-ln -s ~/.dotfiles/git/.gitconfig ~/.gitconfig
-ln -s ~/.dotfiles/git/.gitignore ~/.gitignore
-############
-#ln -s ~/.dotfiles/git/.gitconfig.local ~/.gitconfig.local
-###############3
-
-ln -s ~/.dotfiles/.bashrc ~/.bashrc
-ln -s ~/.dotfiles/.dircolors ~/.dircolors
-ln -s ~/.dotfiles/.myclirc ~/.myclirc
-ln -s ~/.dotfiles/.screenrc ~/.screenrc
-ln -s ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
+# Create symlinks
+echo ''
+echo "Now create symlinks..."
 
 
-##################################### TEST ASDD
+:ask() {
+    echo -n ":: Press y to $1:"
+    read result </dev/tty
+    if [[ "$result" != "y" ]]; then
+        return 1
+    fi
+}
+symlinks=($(cat $DOTPATH/.symlinks))
+for path in "${symlinks[@]}"; do
+    echo "$path" >&2
+    if [[ "$path" == "" ]]; then
+        echo "Wow!"
+        exit 3
+    fi
 
-DOTPATH="$HOME/.dotfiles"
+    if [[ ! -L  $HOME/"$path" ]]; then
+        ls -lah  $HOME/"$path"
+        if ! :ask "remove  $HOME/$path"; then
+            echo "skipping"
+            continue
+        fi
+        rm -rf  $HOME/"$path"
+
+        dir=$(dirname  $HOME/"$path")
+        if [[ ! -d "$dir" ]]; then
+            mkdir -p "$dir"
+        fi
+
+        ln -s  $HOME/dotfiles/"$path"  $HOME/"$path"
+    fi
+done
 
 if [ ! -e "$DOTPATH" ]; then
   echo "Error: Directory $DOTPATH does not exist."
@@ -70,8 +97,6 @@ if [ ! -e "$DOTPATH" ]; then
 fi
 
 cd "$DOTPATH" || exit 1
-
-[[ -z $XDG_CONFIG_HOME ]] && XDG_CONFIG_HOME=$HOME/.config
 
 for file in .??*; do
   [[ "$file" == ".git" ]] && continue
@@ -88,6 +113,13 @@ find "$DOTPATH/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$XDG_CONFIG_H
 # bin
 mkdir -p ~/bin
 find "$DOTPATH/bin/" -type f -perm 0755 -exec ln -fvns {} $HOME/bin/ \;
+
+
+
+# Tmux plugin magager install run after symlink
+if [ test ! -d "~/.tmux/plugins/tpm" ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins
+fi 
 
 #######################################################
 
