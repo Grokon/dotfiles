@@ -9,8 +9,7 @@
 #
 #  ▓▓▓▓▓▓▓▓▓▓
 # ░▓ author ▓ grokon
-# ░▓ code   ▓ http://
-# ░▓ mirror ▓ http://git.io/JJGii
+# ░▓ code   ▓ https://git.io/JJGii
 # ░▓ File:  ▓ bashrc
 # ░▓▓▓▓▓▓▓▓▓▓
 # ░░░░░░░░░░

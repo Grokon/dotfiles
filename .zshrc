@@ -8,9 +8,9 @@
 # ░░░░░░ ░░░░░░  ░░   ░░ ░░░     ░░░░░  
 #
 #  ▓▓▓▓▓▓▓▓▓▓
-# ░▓ author ▓ xero <x@xero.nu>
-# ░▓ code   ▓ http://code.xero.nu/dotfiles
-# ░▓ mirror ▓ http://git.io/.files
+# ░▓ author ▓ grokon
+# ░▓ code   ▓ http://git.io/JJGii
+# ░▓ File:  ▓ zshrc
 # ░▓▓▓▓▓▓▓▓▓▓
 # ░░░░░░░░░░
 #
