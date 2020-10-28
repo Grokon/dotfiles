@@ -32,7 +32,7 @@ function sshrc() {
         fi
         ssh -t "$DOMAIN" $SSHARGS "
             command -v openssl >/dev/null 2>&1 || { echo >&2 \"sshrc requires openssl to be installed on the server, but it's not. Aborting.\"; exit 1; }
-            export SHELL=\"/usr/bin/bash\"
+            export SHELL=\"/bin/bash\"
             $WELCOME_MSG
             export SSHHOME=\$(mktemp -d -t .$(whoami).sshrc.XXXX)
             export SSHRCCLEANUP=\$SSHHOME
