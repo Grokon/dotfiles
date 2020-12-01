@@ -752,7 +752,7 @@ agent_load_env() {
 }
 
 agent_start() {
-    ssh-agent -s | sed 's/^echo/#echo/' > $SSH_ENV
+    ssh-agent -s | sed 's/^echo/#echo/' >| $SSH_ENV
     chmod 600 $SSH_ENV
     . $SSH_ENV > /dev/null
 }
