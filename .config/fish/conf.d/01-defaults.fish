@@ -28,6 +28,17 @@ if which exa > /dev/null
   alias lg="exa -lagh --git"
 end
 
+# fd
+if which fdfind > /dev/null
+  alias fd="fdfind"
+end
+
+# bat
+if which batcat > /dev/null
+  alias bat="batcat"
+  alias cat="bat"
+end
+
 # docker
 set -gx DOCKER_HOST tcp://localhost:2375
 
@@ -150,3 +161,6 @@ set -gx Z_CMD "j"
 set SPACEFISH_PROMPT_ADD_NEWLINE false
 set SPACEFISH_PROMPT_SEPARATE_LINE false
 set SPACEFISH_EXEC_TIME_SHOW false
+
+# tide
+set -g fisher_path $XDG_CONFIG_HOME/fish/plugins
