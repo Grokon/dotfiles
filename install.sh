@@ -34,7 +34,7 @@ sudo apt-add-repository ppa:fish-shell/release-3
 # latest git version
 sudo add-apt-repository ppa:git-core/ppa
 echo "Now installing git and bash-completion... ccze - log colarised ... toilet - ascii-gen ..lolcat - color cut"
-sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux -y
+sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux fd-find -y
 
 echo ''
 echo "Now configuring git-completion..."
@@ -87,7 +87,7 @@ for path in "${symlinks[@]}"; do
             mkdir -p "$dir"
         fi
 
-        ln -s  $HOME/dotfiles/"$path"  $HOME/"$path"
+        ln -s  $DOTPATH/"$path"  $HOME/"$path"
     fi
 done
 
