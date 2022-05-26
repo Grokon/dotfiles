@@ -8,7 +8,7 @@ set -q fish_initialized; and exit
 set -U fish_greeting
 
 # editor
-if which nvim > /dev/null
+if type -q nvim
 	set -Ux EDITOR nvim
   alias vi="nvim"
   alias vim="nvim"
@@ -19,7 +19,7 @@ end
 set -gx PATH $HOME/bin $PATH
 
 # exa
-if which exa > /dev/null
+if type -q exa
   alias ls="exa"
   alias l="exa -a"
   alias ll="exa -lgh"
@@ -29,18 +29,18 @@ if which exa > /dev/null
 end
 
 # fd
-if which fdfind > /dev/null
+if type -q fdfind
   alias fd="fdfind"
 end
 
 # bat
-if which batcat > /dev/null
+if type -q batcat
   alias bat="batcat"
   alias cat="bat"
 end
 
 # docker
-set -gx DOCKER_HOST tcp://localhost:2375
+#set -gx DOCKER_HOST tcp://localhost:2375
 
 set -gx CVSEDITOR $EDITOR
 set -gx SVN_EDITOR $EDITOR
@@ -48,7 +48,8 @@ set -gx GIT_EDITOR $EDITOR
 
 # pager
 set -Ux PAGER less
-set -Ux LESS '--RAW-CONTROL-CHARS --tabs=4'
+#set -Ux LESS '--RAW-CONTROL-CHARS --tabs=4'
+set -Ux LESS "-RSM~gIsw"
 set -Ux LESSHISTFILE $XDG_CACHE_HOME/lesshist
 
 # ssh-agent
@@ -163,4 +164,4 @@ set SPACEFISH_PROMPT_SEPARATE_LINE false
 set SPACEFISH_EXEC_TIME_SHOW false
 
 # tide
-set -g fisher_path $XDG_CONFIG_HOME/fish/plugins
+# set -g fisher_path $XDG_CONFIG_HOME/fish/plugins
