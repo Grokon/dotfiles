@@ -7,5 +7,8 @@ function sysinfo --description "Gives you a bunch of info about your machine"
   echo machine: (uname --machine)
   echo processor: (uname --processor)
   echo hardware-platform: (uname --hardware-platform)
-  echo operating-system: (uname --operating-system)
+  echo -n operating-system: (uname --operating-system)
+  if test -d /run/WSL
+    echo ' - based on Windows WSL 2' $suffix
+  end
 end
