@@ -1,3 +1,21 @@
+# vim:fdl=1 fdm=marker:
+#                 ___
+#   ___======____=---=)
+# /T            \_--===)
+# [ \ (0)   \~    \_-==)
+#  \      / )J~~    \-=)
+#   \\___/  )JJ~~~   \)
+#    \_____/JJJ~~~~    \
+#    / \  , \J~~~~~     \
+#   (-\)\=|\\\~~~~       L__
+#   (\\)  (\\\)_           \==__
+#    \V    \\\) ===_____   \\\\\\
+#           \V)     \_) \\\\JJ\J\)
+#                       /J\JT\JJJJ)
+#                       (JJJ| \UUU)
+#                        (UU)
+# Startup {{{1
+# initialized {{{2
 set -q fish_initialized; and exit
 
 # locale
@@ -34,4 +52,3 @@ end
 #    echo Creating platform specific file: $PLATFORM_SPECIFIC_FILE
 #    touch $PLATFORM_SPECIFIC_FILE
 # end  
-

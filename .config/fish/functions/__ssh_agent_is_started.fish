@@ -1,14 +1,11 @@
 function __ssh_agent_is_started -d "check if ssh agent is already started"
-	if begin; test -f $SSH_ENV; and test -z "$SSH_AGENT_PID"; end
-		source $SSH_ENV > /dev/null
-	end
-
-	if test -z "$SSH_AGENT_PID"
-		return 1
-	end
-
-	ssh-add -l > /dev/null 2>&1
-	if test $status -eq 2
-		return 1
+	if set -q SSH_AUTH_SOCK
+		# ssh-add returns:
+        #   0 = agent running, has keys
+        #   1 = agent running, no keys
+        #   2 = agent not running
+		ssh-add -l > /dev/null 2>&1 || [ $status -eq 1 ]
+	else
+		false
 	end
 end
