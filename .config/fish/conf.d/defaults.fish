@@ -58,9 +58,12 @@ set -Ux LESSHISTFILE /dev/null
 
 
 if not __ssh_agent_is_started
+  echo "ssh-agent not started"
+  echo $SSH_AUTH_SOCK
   __ssh_agent_start
   ssh-add
 else if not ssh-add -l >/dev/null 2>&1
+  echo "add key to ssh-agent"
   ssh-add
 end
 

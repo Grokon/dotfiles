@@ -1,4 +1,4 @@
 # Workaround for https://git.io/vH7vA
 function setenv
-  set -gx $argv
+  set -Ux $argv
 end
