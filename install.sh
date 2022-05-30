@@ -177,3 +177,7 @@ sudo apt install fish
 
 #install GO / check version https://golang.org/dl/
 curl https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz | sudo tar xzf - -C /usr/local
+
+
+
+# https://starship.rs/install.sh - auto install starship - TODO analyze 
