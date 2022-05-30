@@ -34,7 +34,7 @@ sudo apt-add-repository ppa:fish-shell/release-3
 # latest git version
 sudo add-apt-repository ppa:git-core/ppa
 echo "Now installing git and bash-completion... ccze - log colarised ... toilet - ascii-gen ..lolcat - color cut"
-sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux fd-find -y
+sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux fd-find exa -y
 
 echo ''
 echo "Now configuring git-completion..."
