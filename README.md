@@ -5,7 +5,7 @@ Future request....
 ## INSTALL
 Via bash:
 ```
-bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/Grokon/dotfiles/master/install.sh)
 ```
 
 ## [Z.lua cheat-sheat](https://github.com/skywind3000/z.lua)
