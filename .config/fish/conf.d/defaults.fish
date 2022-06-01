@@ -33,8 +33,9 @@ end
 # bat
 if type -q batcat
   alias bat="batcat"
-  alias cat="bat"
+  alias cat="bat --color=always"
   set -U FZF_PREVIEW_FILE_CMD 'bat --color always'
+  set -gx BAT_STYLE "changes,header"
 end
 
 # docker
@@ -49,11 +50,6 @@ set -Ux PAGER less
 #set -Ux LESS '--RAW-CONTROL-CHARS --tabs=4'
 set -Ux LESS "--RAW-CONTROL-CHARS --LONG-PROMPT --hilite-search --ignore-case --tabs=4 --window=-4"
 set -Ux LESSHISTFILE /dev/null
-
-# ssh-agent
-# if test -z "$SSH_ENV"
-#     set -gx SSH_ENV $HOME/.ssh/environment
-# end
 
 #
 # toolchains
@@ -96,16 +92,16 @@ set -Ux CARGO_HOME $XDG_DATA_HOME/cargo
 # set -Ux VIM_CONFIG_PATH $XDG_CONFIG_HOME/nvim
 
 # gnupg
-set -Ux GNUPGHOME $HOME/.gnupg
+set -gx GNUPGHOME $HOME/.gnupg
 
 # ccache
-set -Ux CCACHE_DIR $XDG_CACHE_HOME/ccache
+set -gx CCACHE_DIR $XDG_CACHE_HOME/ccache
 
 # libvirt
-set -Ux LIBVIRT_DEFAULT_URI qemu:///system
+set -gx LIBVIRT_DEFAULT_URI qemu:///system
 
 # httpie
-set -Ux HTTPIE_CONFIG_DIR $XDG_CONFIG_HOME/httpie
+set -gx HTTPIE_CONFIG_DIR $XDG_CONFIG_HOME/httpie
 
 #
 # fzf
