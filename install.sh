@@ -24,11 +24,11 @@ DOTPATH="$HOME/.dotfiles"
 # Installing git completion/ jq (lightweight and flexible command-line JSON processor)
 echo ''
 # latest neovim version
-sudo add-apt-repository ppa:neovim-ppa/stable -y
+sudo add-apt-repository -y ppa:neovim-ppa/stable
 # latest fish version 
-sudo apt-add-repository ppa:fish-shell/release-3 -y
+sudo apt-add-repository -y ppa:fish-shell/release-3
 # latest git version
-sudo add-apt-repository ppa:git-core/ppa -y
+sudo add-apt-repository -y ppa:git-core/ppa
 # Update pkg lists
 echo "Updating package lists..."
 sudo apt-get update
