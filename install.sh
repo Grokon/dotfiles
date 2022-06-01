@@ -20,6 +20,7 @@
 set -eo pipefail
 DOTPATH="$HOME/.dotfiles"
 [[ -z $XDG_CONFIG_HOME ]] && XDG_CONFIG_HOME=$HOME/.config
+mkdir -p "$XDG_CONFIG_HOME"
 
 # Installing git completion/ jq (lightweight and flexible command-line JSON processor)
 echo ''
@@ -85,7 +86,7 @@ for file in .??*; do
   [[ "$file" == ".gitignore" ]] && continue
   [[ "$file" == ".DS_Store" ]] && continue
   [[ "$file" == ".travis.yml" ]] && continue
-  if [[ "$file" == ".config" ]] && continue
+  [[ "$file" == ".config" ]] && continue
   if [[ ! -L  $HOME/"$file" ]]; then
       ls -lah  $HOME/"$file"
       if ! :ask "remove  $HOME/$file"; then
@@ -104,7 +105,7 @@ for file in .??*; do
 done
 cd ~
 
-mkdir -p "$XDG_CONFIG_HOME"
+# fish
 find "$DOTPATH/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$XDG_CONFIG_HOME/" \;
 
 # bin
