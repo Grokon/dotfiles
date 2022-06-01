@@ -70,7 +70,7 @@ echo "Now create symlinks..."
 
 
 :ask() {
-    echo -n ":: Press y to $1:"
+    echo -n ":: Press y to $1: "
     read result </dev/tty
     if [[ "$result" != "y" ]]; then
         return 1
@@ -85,10 +85,7 @@ for file in .??*; do
   [[ "$file" == ".gitignore" ]] && continue
   [[ "$file" == ".DS_Store" ]] && continue
   [[ "$file" == ".travis.yml" ]] && continue
-  if [[ "$file" == ".config" ]]; then
-    mkdir -p "$XDG_CONFIG_HOME"
-    find "$DOTPATH/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$XDG_CONFIG_HOME/" \;
-  fi
+  if [[ "$file" == ".config" ]] && continue
   if [[ ! -L  $HOME/"$file" ]]; then
       ls -lah  $HOME/"$file"
       if ! :ask "remove  $HOME/$file"; then
@@ -106,6 +103,9 @@ for file in .??*; do
   fi
 done
 cd ~
+
+mkdir -p "$XDG_CONFIG_HOME"
+find "$DOTPATH/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$XDG_CONFIG_HOME/" \;
 
 # bin
 mkdir -p ~/bin
