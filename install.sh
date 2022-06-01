@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #  ██
 # 
 # ░██   ░██     ██
@@ -21,10 +21,6 @@ set -euo pipefail
 DOTPATH="$HOME/.dotfiles"
 [[ -z $XDG_CONFIG_HOME ]] && XDG_CONFIG_HOME=$HOME/.config
 
-# Update pkg lists
-echo "Updating package lists..."
-sudo apt-get update
-
 # Installing git completion/ jq (lightweight and flexible command-line JSON processor)
 echo ''
 # latest neovim version
@@ -33,8 +29,12 @@ sudo add-apt-repository ppa:neovim-ppa/stable
 sudo apt-add-repository ppa:fish-shell/release-3
 # latest git version
 sudo add-apt-repository ppa:git-core/ppa
+# Update pkg lists
+echo "Updating package lists..."
+sudo apt-get update
+# Install packages
 echo "Now installing git and bash-completion... ccze - log colarised ... toilet - ascii-gen ..lolcat - color cut"
-sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux fd-find exa bat ripgrep -y
+sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux fd-find exa bat ripgrep fzf -y
 
 echo ''
 echo "Now configuring git-completion..."
@@ -47,11 +47,11 @@ if ! curl "$URL" --silent --output "$HOME/.git-completion.bash"; then
 fi
 
 
-# install fzf
-echo ''
-echo "Install fzf..."
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+# # install fzf
+# echo ''
+# echo "Install fzf..."
+# git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+# ~/.fzf/install
 
 
 # Create symlinks
@@ -66,37 +66,7 @@ echo "Now create symlinks..."
         return 1
     fi
 }
-# symlinks=($(cat $DOTPATH/.symlinks))
-# for path in "${symlinks[@]}"; do
-#     echo "$path" >&2
-#     if [[ "$path" == "" ]]; then
-#         echo "Wow!"
-#         exit 3
-#     fi
 
-#     if [[ ! -L  $HOME/"$path" ]]; then
-#         ls -lah  $HOME/"$path"
-#         if ! :ask "remove  $HOME/$path"; then
-#             echo "skipping"
-#             continue
-#         fi
-#         rm -rf  $HOME/"$path"
-
-#         dir=$(dirname  $HOME/"$path")
-#         if [[ ! -d "$dir" ]]; then
-#             mkdir -p "$dir"
-#         fi
-
-#         ln -s  $DOTPATH/"$path"  $HOME/"$path"
-#     fi
-# done
-
-# if [ ! -e "$DOTPATH" ]; then
-#   echo "Error: Directory $DOTPATH does not exist."
-#   exit 1
-# fi
-
-# cd "$DOTPATH" || exit 1
 
 for file in .??*; do
   [[ "$file" == ".git" ]] && continue
@@ -104,7 +74,8 @@ for file in .??*; do
   [[ "$file" == ".DS_Store" ]] && continue
   [[ "$file" == ".travis.yml" ]] && continue
   if [[ "$file" == ".config" ]]; then
-    continue # TODO: add fish config
+    mkdir -p "$XDG_CONFIG_HOME"
+    find "$DOTPATH/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$XDG_CONFIG_HOME/" \;
   fi
   if [[ ! -L  $HOME/"$file" ]]; then
       ls -lah  $HOME/"$file"
@@ -123,9 +94,6 @@ for file in .??*; do
   fi
 done
 
-mkdir -p "$XDG_CONFIG_HOME"
-find "$DOTPATH/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$XDG_CONFIG_HOME/" \;
-
 # bin
 mkdir -p ~/bin
 find "$DOTPATH/bin/" -type f -perm 0755 -exec ln -fvns {} $HOME/bin/ \;
@@ -133,8 +101,9 @@ find "$DOTPATH/bin/" -type f -perm 0755 -exec ln -fvns {} $HOME/bin/ \;
 
 
 # Tmux plugin magager install run after symlink
-if [ test ! -d "~/.tmux/plugins/tpm" ]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins
+if [ ! -d "~/.tmux/plugins/tpm" ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 
+    ~/.tmux/plugins/tpm/bin/install_plugins
 fi 
 
 #######################################################
@@ -149,18 +118,11 @@ fi
 # lua-compiler-manual /usr/share/man/man1/luac5.3.1.gz
 
 
-
-
-~/.tmux/plugins/tpm/scripts/install_plugins.sh
-
-
-
-
-function update-fzf --description "Installs or updates fzf"
-  set FZF_VERSION (curl -Ls -o /dev/null -w "%{url_effective}" https://github.com/junegunn/fzf-bin/releases/latest | xargs basename)
-  curl -L https://github.com/junegunn/fzf-bin/releases/download/$FZF_VERSION/fzf-$FZF_VERSION-linux_amd64.tgz | tar -xz -C /tmp/
-  sudo -p "Root password to install fzf: " mv /tmp/fzf /usr/local/bin/fzf
-end
+# function update-fzf --description "Installs or updates fzf"
+#   set FZF_VERSION (curl -Ls -o /dev/null -w "%{url_effective}" https://github.com/junegunn/fzf-bin/releases/latest | xargs basename)
+#   curl -L https://github.com/junegunn/fzf-bin/releases/download/$FZF_VERSION/fzf-$FZF_VERSION-linux_amd64.tgz | tar -xz -C /tmp/
+#   sudo -p "Root password to install fzf: " mv /tmp/fzf /usr/local/bin/fzf
+# end
 
 # change def shell to fish
 chsh -s /usr/bin/fish

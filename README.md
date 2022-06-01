@@ -1,13 +1,14 @@
 # Readme ( )
 
-
-
 Future request....
 
+## INSTALL
+Via bash:
+```
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+```
 
-
-
-# [Z.lua cheat-sheat](https://github.com/skywind3000/z.lua)
+## [Z.lua cheat-sheat](https://github.com/skywind3000/z.lua)
 
 ```
 z foo       # cd to most frecent dir matching foo
@@ -22,7 +23,7 @@ z -I foo    # cd with interactive selection using fzf
 z -b foo    # cd to the parent directory starting with foo
 ```
 
-# [FZF keybinging](https://github.com/junegunn/fzf#key-bindings-for-command-line)
+## [FZF keybinging](https://github.com/junegunn/fzf#key-bindings-for-command-line)
 
 - `CTRL-T` - Paste the selected files and directories onto the command-line
     - Set `FZF_CTRL_T_COMMAND` to override the default command
@@ -44,7 +45,7 @@ z -b foo    # cd to the parent directory starting with foo
 - Mouse: scroll, click, double-click; shift-click and shift-scroll on
   multi-select mode
 
-# Metadata and File Permissions
+## Metadata and File Permissions
 A problem with this approach is that your ssh keys need to be secured, but by default Windows files accessed through WSL are readable/writable by everyone and chmod has no affect on Windows files. This can be remedied by re-mounting your Windows partition inside WSL with the metdata option. Edit the /etc/wsl.conf file (create it if it doesn’t exist) and add the following:
 
 ```
