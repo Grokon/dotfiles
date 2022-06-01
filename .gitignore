@@ -73,4 +73,7 @@ $RECYCLE.BIN/
 # Backup files  
 bak/
 
+# Mac
+.DS_Store/
+
 # End

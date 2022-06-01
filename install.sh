@@ -25,7 +25,7 @@ mkdir -p "$XDG_CONFIG_HOME"
 # Installing git completion/ jq (lightweight and flexible command-line JSON processor)
 echo ''
 # latest neovim version
-sudo add-apt-repository -y ppa:neovim-ppa/stable
+sudo add-apt-repository -y ppa:neovim-ppa/unstable
 # latest fish version 
 sudo apt-add-repository -y ppa:fish-shell/release-3
 # latest git version
@@ -83,41 +83,35 @@ echo "Now create symlinks..."
 cd $DOTPATH
 for file in .??*; do
   [[ "$file" == ".git" ]] && continue
-  [[ "$file" == ".gitignore" ]] && continue
   [[ "$file" == ".DS_Store" ]] && continue
-  [[ "$file" == ".travis.yml" ]] && continue
-  [[ "$file" == ".config" ]] && continue
+  if [[ "$file" == ".config" ]]; then
+    find "$DOTPATH/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$XDG_CONFIG_HOME/" \;
+    continue
+  fi
   if [[ ! -L  $HOME/"$file" ]]; then
+    if [[ -f $HOME/"$file" ]]; then
       ls -lah  $HOME/"$file"
       if ! :ask "remove  $HOME/$file"; then
           echo "skipping"
           continue
       fi
       rm -rf  $HOME/"$file"
-
-      dir=$(dirname  $HOME/"$file")
-      if [[ ! -d "$dir" ]]; then
-          mkdir -p "$dir"
-      fi
-
-      ln -fvns "$DOTPATH/$file" "$HOME/$file"
+    fi
+    ln -fvns "$DOTPATH/$file" "$HOME/$file"
   fi
 done
-cd ~
-
-# fish
-find "$DOTPATH/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$XDG_CONFIG_HOME/" \;
+cd $HOME
 
 # bin
-mkdir -p ~/bin
+mkdir -p $HOME/bin
 find "$DOTPATH/bin/" -type f -perm 0755 -exec ln -fvns {} $HOME/bin/ \;
 
 
 
 # Tmux plugin magager install run after symlink
-if [ ! -d "~/.tmux/plugins/tpm" ]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 
-    ~/.tmux/plugins/tpm/bin/install_plugins
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+    git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm 
+    $HOME/.tmux/plugins/tpm/bin/install_plugins
 fi 
 
 #######################################################
