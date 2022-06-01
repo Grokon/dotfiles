@@ -31,15 +31,25 @@ sudo apt-add-repository -y ppa:fish-shell/release-3
 # latest git version
 sudo add-apt-repository -y ppa:git-core/ppa
 # Update pkg lists
-echo "Updating package lists..."
-sudo apt-get update
+echo "Updating package..."
+sudo apt-get update && sudo apt-get upgrade -y
 # Install packages
 echo "Now installing git and bash-completion... ccze - log colarised ... toilet - ascii-gen ..lolcat - color cut"
-sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux fd-find exa bat ripgrep fzf -y
+sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux fd-find exa bat ripgrep fzf make -y
 
+# install docker
+if type -f docker >/dev/null; then
+    echo "docker is already installed"
+else
+    echo "Installing docker..."
+    sudo bash <(curl -s https://get.docker.com)
+    sudo usermod -aG docker $USER
+fi
+
+# install bash-completion
 echo ''
 echo "Now configuring git-completion..."
-GIT_VERSION=`git --version | awk '{print $3}'`
+GIT_VERSION=$(git --version | awk '{print $3}')
 URL="https://raw.githubusercontent.com/git/git/v$GIT_VERSION/contrib/completion/git-completion.bash"
 echo ''
 echo "Downloading git-completion for git version: $GIT_VERSION..."
@@ -79,13 +89,23 @@ echo "Now create symlinks..."
 }
 
 
-
 cd $DOTPATH
 for file in .??*; do
   [[ "$file" == ".git" ]] && continue
   [[ "$file" == ".DS_Store" ]] && continue
+  if [[ "$file" == ".bin" ]]; then
+    mkdir -p $HOME/bin
+    find "$DOTPATH/bin/" -type f -perm 0755 -exec ln -fvns {} $HOME/bin/ \;
+    continue
+  fi
   if [[ "$file" == ".config" ]]; then
     find "$DOTPATH/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$XDG_CONFIG_HOME/" \;
+    continue
+  fi
+  if [[ "$file" == ".gnupg" ]]; then
+    mkdir -p "$HOME/.gnupg"
+    chmod 600 "$HOME/.gnupg"
+    find "$DOTPATH/.gnupg" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$HOME/.gnupg" \;
     continue
   fi
   if [[ ! -L  $HOME/"$file" ]]; then
@@ -102,9 +122,6 @@ for file in .??*; do
 done
 cd $HOME
 
-# bin
-mkdir -p $HOME/bin
-find "$DOTPATH/bin/" -type f -perm 0755 -exec ln -fvns {} $HOME/bin/ \;
 
 
 
@@ -137,9 +154,24 @@ chsh -s /usr/bin/fish
 
 
 # LunarVim
-bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) --no-install-dependencies
 
 
+# check WSL
+if [ -f /proc/version ]; then
+    if grep -qi microsoft /proc/version; then
+        echo "WSL detected"
+        {\
+        echo '[automount]'; \
+        echo 'options = "metadata,umask=22,fmask=11"'; \
+        echo ''; \
+        echo '# Set a command to run when a new WSL instance launches.'; \
+        echo '[boot]'; \
+        echo 'command = service docker start'; \
+        }| sudo tee /etc/wsl.conf
+
+    fi
+fi 
 
 
 # ## Debian
