@@ -17,7 +17,7 @@
 #
 # =============================================================== #
 
-set -euo pipefail
+set -eo pipefail
 DOTPATH="$HOME/.dotfiles"
 [[ -z $XDG_CONFIG_HOME ]] && XDG_CONFIG_HOME=$HOME/.config
 
