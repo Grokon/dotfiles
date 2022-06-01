@@ -53,6 +53,16 @@ fi
 # git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 # ~/.fzf/install
 
+# isntall .dotfiles
+echo ''
+if [ ! -d "$DOTPATH" ]; then
+  echo "Cloning .dotfiles..."
+  git clone https://github.com/Grokon/dotfiles.git "$DOTPATH"
+else
+  echo "Updating .dotfiles..."
+  cd "$DOTPATH" && git pull && cd ~
+fi
+
 
 # Create symlinks
 echo ''
@@ -68,6 +78,8 @@ echo "Now create symlinks..."
 }
 
 
+
+cd $DOTPATH
 for file in .??*; do
   [[ "$file" == ".git" ]] && continue
   [[ "$file" == ".gitignore" ]] && continue
@@ -93,6 +105,7 @@ for file in .??*; do
       ln -fvns "$DOTPATH/$file" "$HOME/$file"
   fi
 done
+cd ~
 
 # bin
 mkdir -p ~/bin
