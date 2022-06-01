@@ -28,13 +28,13 @@ sudo apt-get update
 # Installing git completion/ jq (lightweight and flexible command-line JSON processor)
 echo ''
 # latest neovim version
-sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo add-apt-repository ppa:neovim-ppa/stable
 # latest fish version 
 sudo apt-add-repository ppa:fish-shell/release-3
 # latest git version
 sudo add-apt-repository ppa:git-core/ppa
 echo "Now installing git and bash-completion... ccze - log colarised ... toilet - ascii-gen ..lolcat - color cut"
-sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux fd-find exa -y
+sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux fd-find exa bat ripgrep -y
 
 echo ''
 echo "Now configuring git-completion..."
@@ -66,45 +66,61 @@ echo "Now create symlinks..."
         return 1
     fi
 }
-symlinks=($(cat $DOTPATH/.symlinks))
-for path in "${symlinks[@]}"; do
-    echo "$path" >&2
-    if [[ "$path" == "" ]]; then
-        echo "Wow!"
-        exit 3
-    fi
+# symlinks=($(cat $DOTPATH/.symlinks))
+# for path in "${symlinks[@]}"; do
+#     echo "$path" >&2
+#     if [[ "$path" == "" ]]; then
+#         echo "Wow!"
+#         exit 3
+#     fi
 
-    if [[ ! -L  $HOME/"$path" ]]; then
-        ls -lah  $HOME/"$path"
-        if ! :ask "remove  $HOME/$path"; then
-            echo "skipping"
-            continue
-        fi
-        rm -rf  $HOME/"$path"
+#     if [[ ! -L  $HOME/"$path" ]]; then
+#         ls -lah  $HOME/"$path"
+#         if ! :ask "remove  $HOME/$path"; then
+#             echo "skipping"
+#             continue
+#         fi
+#         rm -rf  $HOME/"$path"
 
-        dir=$(dirname  $HOME/"$path")
-        if [[ ! -d "$dir" ]]; then
-            mkdir -p "$dir"
-        fi
+#         dir=$(dirname  $HOME/"$path")
+#         if [[ ! -d "$dir" ]]; then
+#             mkdir -p "$dir"
+#         fi
 
-        ln -s  $DOTPATH/"$path"  $HOME/"$path"
-    fi
-done
+#         ln -s  $DOTPATH/"$path"  $HOME/"$path"
+#     fi
+# done
 
-if [ ! -e "$DOTPATH" ]; then
-  echo "Error: Directory $DOTPATH does not exist."
-  exit 1
-fi
+# if [ ! -e "$DOTPATH" ]; then
+#   echo "Error: Directory $DOTPATH does not exist."
+#   exit 1
+# fi
 
-cd "$DOTPATH" || exit 1
+# cd "$DOTPATH" || exit 1
 
 for file in .??*; do
   [[ "$file" == ".git" ]] && continue
   [[ "$file" == ".gitignore" ]] && continue
   [[ "$file" == ".DS_Store" ]] && continue
   [[ "$file" == ".travis.yml" ]] && continue
-  [[ "$file" == ".config" ]] && continue
-  ln -fvns "$DOTPATH/$file" "$HOME/$file"
+  if [[ "$file" == ".config" ]]; then
+    continue # TODO: add fish config
+  fi
+  if [[ ! -L  $HOME/"$file" ]]; then
+      ls -lah  $HOME/"$file"
+      if ! :ask "remove  $HOME/$file"; then
+          echo "skipping"
+          continue
+      fi
+      rm -rf  $HOME/"$file"
+
+      dir=$(dirname  $HOME/"$file")
+      if [[ ! -d "$dir" ]]; then
+          mkdir -p "$dir"
+      fi
+
+      ln -fvns "$DOTPATH/$file" "$HOME/$file"
+  fi
 done
 
 mkdir -p "$XDG_CONFIG_HOME"
@@ -124,13 +140,13 @@ fi
 #######################################################
 
 
-sudo update-alternatives --install /usr/bin/lua lua-interpreter \
-/usr/bin/lua5.3 130 --slave /usr/share/man/man1/lua.1.gz \
-lua-manual /usr/share/man/man1/lua5.3.1.gz
+# sudo update-alternatives --install /usr/bin/lua lua-interpreter \
+# /usr/bin/lua5.3 130 --slave /usr/share/man/man1/lua.1.gz \
+# lua-manual /usr/share/man/man1/lua5.3.1.gz
 
-sudo update-alternatives --install /usr/bin/luac lua-compiler \
-/usr/bin/luac5.3 130 --slave /usr/share/man/man1/luac.1.gz \
-lua-compiler-manual /usr/share/man/man1/luac5.3.1.gz
+# sudo update-alternatives --install /usr/bin/luac lua-compiler \
+# /usr/bin/luac5.3 130 --slave /usr/share/man/man1/luac.1.gz \
+# lua-compiler-manual /usr/share/man/man1/luac5.3.1.gz
 
 
 
@@ -149,34 +165,33 @@ end
 # change def shell to fish
 chsh -s /usr/bin/fish
 
-# SpaceVim
-curl -sLf https://spacevim.org/install.sh | bash
 
-# ripgrep
-$ curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep_0.10.0_amd64.deb
-$ sudo dpkg -i ripgrep_0.10.0_amd64.deb
-
-
-## Debian
-#Для Debian 9.0 запустите от имени root:
-echo 'deb http://download.opensuse.org/repositories/shells:/fish/Debian_9.0/ /' > /etc/apt/sources.list.d/shells:fish.list
-apt-get update
-apt-get install fish
-#Вы можете добавить ключ репозитория в apt. Имейте в виду, что владелец ключа может распространять обновления, пакеты и репозитории, которым ваша система будет доверять (подробнее). Для добавления ключа запустите:
-wget -nv https://download.opensuse.org/repositories/shells:fish/Debian_9.0/Release.key -O Release.key
-apt-key add - < Release.key
-apt-get update
-#################
-echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/2/Debian_9.0/ /' | sudo tee -a /etc/apt/sources.list
-wget -q -O - https://download.opensuse.org/repositories/shells:fish:release:2/Debian_9.0/Release.key | sudo apt-key add -
-sudo apt update
-sudo apt install fish
+# LunarVim
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
 
 
 
 
-#install GO / check version https://golang.org/dl/
-curl https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz | sudo tar xzf - -C /usr/local
+# ## Debian
+# #Для Debian 9.0 запустите от имени root:
+# echo 'deb http://download.opensuse.org/repositories/shells:/fish/Debian_9.0/ /' > /etc/apt/sources.list.d/shells:fish.list
+# apt-get update
+# apt-get install fish
+# #Вы можете добавить ключ репозитория в apt. Имейте в виду, что владелец ключа может распространять обновления, пакеты и репозитории, которым ваша система будет доверять (подробнее). Для добавления ключа запустите:
+# wget -nv https://download.opensuse.org/repositories/shells:fish/Debian_9.0/Release.key -O Release.key
+# apt-key add - < Release.key
+# apt-get update
+# #################
+# echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/2/Debian_9.0/ /' | sudo tee -a /etc/apt/sources.list
+# wget -q -O - https://download.opensuse.org/repositories/shells:fish:release:2/Debian_9.0/Release.key | sudo apt-key add -
+# sudo apt update
+# sudo apt install fish
+
+
+
+
+# #install GO / check version https://golang.org/dl/
+# curl https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz | sudo tar xzf - -C /usr/local
 
 
 
