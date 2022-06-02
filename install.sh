@@ -25,17 +25,29 @@ mkdir -p "$XDG_CONFIG_HOME"
 # Installing git completion/ jq (lightweight and flexible command-line JSON processor)
 echo ''
 # latest neovim version
-sudo add-apt-repository -y ppa:neovim-ppa/unstable
+if ! [ -x "$(command -v nvim)" ]; then
+  echo 'Installing neovim'
+  sudo add-apt-repository -y ppa:neovim-ppa/unstable
+  sudo apt-get install -y neovim
+fi
 # latest fish version 
-sudo apt-add-repository -y ppa:fish-shell/release-3
+if ! [ -x "$(command -v fish)" ]; then
+  echo 'Installing fish'
+  sudo apt-add-repository -y ppa:fish-shell/release-3
+  sudo apt-get install -y fish
+fi
 # latest git version
-sudo add-apt-repository -y ppa:git-core/ppa
+if ! [ -x "$(command -v git)" ]; then
+  echo 'Installing git'
+  sudo add-apt-repository -y ppa:git-core/ppa
+  sudo apt-get install -y git
+fi
 # Update pkg lists
 echo "Updating package..."
 sudo apt-get update && sudo apt-get upgrade -y
 # Install packages
 echo "Now installing git and bash-completion... ccze - log colarised ... toilet - ascii-gen ..lolcat - color cut"
-sudo apt-get install git bash-completion ccze toilet lolcat neovim fish zsh jq tmux fd-find exa bat ripgrep fzf make -y
+sudo apt-get install bash-completion ccze toilet lolcat zsh jq tmux fd-find exa bat ripgrep fzf make -y
 
 # install docker
 if type -f docker >/dev/null; then
@@ -95,7 +107,7 @@ for file in .??*; do
   [[ "$file" == ".DS_Store" ]] && continue
   if [[ "$file" == ".bin" ]]; then
     mkdir -p $HOME/bin
-    find "$DOTPATH/bin/" -type f -perm 0755 -exec ln -fvns {} $HOME/bin/ \;
+    find "$DOTPATH/.bin/" -type f -perm 0755 -exec ln -fvns {} $HOME/bin/ \;
     continue
   fi
   if [[ "$file" == ".config" ]]; then
