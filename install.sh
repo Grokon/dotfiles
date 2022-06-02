@@ -153,8 +153,15 @@ fi
 chsh -s /usr/bin/fish
 
 
-# LunarVim
-bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) --no-install-dependencies
+# # LunarVim
+# if [ ! -d "$HOME/.config/nvim" ]; then
+#     mkdir -p "$HOME/.config/nvim"
+# fi
+# bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) --no-install-dependencies
+
+
+# SpaceShip - https://spacevim.org/quick-start-guide/
+curl -sLf https://spacevim.org/install.sh | bash
 
 
 # check WSL
