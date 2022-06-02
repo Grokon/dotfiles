@@ -115,8 +115,16 @@ for file in .??*; do
     continue
   fi
   if [[ "$file" == ".gnupg" ]]; then
+    if [[ -L  $HOME/"$file" ]]; then
+      ls -lah  $HOME/"$file"
+      if ! :ask "remove  $HOME/$file"; then
+        echo "skipping"
+        continue
+      fi
+      rm -rf $HOME/"$file"
+    fi
     mkdir -p "$HOME/.gnupg"
-    chmod 600 "$HOME/.gnupg"
+    chmod 700 "$HOME/.gnupg"
     find "$DOTPATH/.gnupg" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "$HOME/.gnupg" \;
     continue
   fi
@@ -179,7 +187,7 @@ curl -sLf https://spacevim.org/install.sh | bash
 # check WSL
 if [ -f /proc/version ]; then
     if grep -qi microsoft /proc/version; then
-        echo "WSL detected"
+        echo "WSL detected - add WSL parameters"
         {\
         echo '[automount]'; \
         echo 'options = "metadata,umask=22,fmask=11"'; \
