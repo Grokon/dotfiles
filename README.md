@@ -5,7 +5,7 @@ Future request....
 ## INSTALL
 Via bash:
 ```
-bash <(curl -s https://raw.githubusercontent.com/Grokon/dotfiles/master/install.sh)
+curl -sLf https://raw.githubusercontent.com/Grokon/dotfiles/master/install.sh | bash
 ```
 
 ## [Z.lua cheat-sheat](https://github.com/skywind3000/z.lua)
