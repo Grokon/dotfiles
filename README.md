@@ -1,6 +1,7 @@
 # Readme ( )
 
 Future request....
+!!! NOW ONLY FOR UBUNTU (WSL) !!!
 
 ## INSTALL
 Via bash:
