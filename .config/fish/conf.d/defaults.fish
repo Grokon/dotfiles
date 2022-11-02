@@ -38,6 +38,11 @@ if type -q batcat
   set -gx BAT_STYLE "changes,header"
 end
 
+# ansible
+if type -q ansible
+  set -Ux ANSIBLE_SSH_ARGS "-o ControlMaster=auto -o ControlPersist=60s -o ControlPath=/tmp/ansible-ssh-%h-%p-%r -o ForwardAgent=yes"
+end
+
 # docker
 #set -gx DOCKER_HOST tcp://localhost:2375
 
@@ -73,6 +78,7 @@ set -Ux PIPX_BIN_DIR $XDG_DATA_HOME/pipx/bin
 set -Ux PIPENV_SHELL_FANCY 1
 set -Ux PIPENV_VENV_IN_PROJECT 1
 set -Ux PYLINTHOME $XDG_CACHE_HOME/pylint
+set -gx PATH $HOME/.local/bin $PATH
 
 # ruby
 set -Ux RBENV_ROOT $XDG_DATA_HOME/rbenv
