@@ -177,7 +177,7 @@ fi
 # end
 
 # change def shell to fish
-sudo chsh -s /usr/bin/fish
+chsh -s /usr/bin/fish
 
 
 # # LunarVim
