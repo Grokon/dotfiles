@@ -87,7 +87,7 @@ fi
 echo ''
 if [ ! -d "$DOTPATH" ]; then
   echo "Cloning .dotfiles..."
-  git clone https://github.com/Grokon/dotfiles.git "$DOTPATH"
+  git clone git@github.com:Grokon/dotfiles.git "$DOTPATH"
 else
   echo "Updating .dotfiles..."
   cd "$DOTPATH" && git pull && cd ~
