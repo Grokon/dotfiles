@@ -61,8 +61,10 @@ set -Ux LESSHISTFILE /dev/null
 #
 
 # golang
-set -Ux GOPATH (go env GOPATH)
-set -gx PATH $PATH $GOPATH/bin
+if type -q go
+  set -Ux GOPATH (go env GOPATH)
+  set -gx PATH $PATH $GOPATH/bin
+end
 
 # node.js
 set -Ux NODENV_ROOT $XDG_DATA_HOME/nodenv
