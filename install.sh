@@ -19,6 +19,7 @@
 
 set -eo pipefail
 DOTPATH="$HOME/.dotfiles"
+USER=$(whoami)
 [[ -z $XDG_CONFIG_HOME ]] && XDG_CONFIG_HOME=$HOME/.config
 mkdir -p "$XDG_CONFIG_HOME"
 
@@ -54,7 +55,13 @@ if type -f docker >/dev/null; then
     echo "docker is already installed"
 else
     echo "Installing docker..."
-    sudo bash <(curl -s https://get.docker.com)
+    sudo mkdir -m 0755 -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo \
+  	"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  	$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     sudo usermod -aG docker $USER
 fi
 
@@ -80,7 +87,7 @@ fi
 echo ''
 if [ ! -d "$DOTPATH" ]; then
   echo "Cloning .dotfiles..."
-  git clone https://github.com/Grokon/dotfiles.git "$DOTPATH"
+  git clone git@github.com:Grokon/dotfiles.git "$DOTPATH"
 else
   echo "Updating .dotfiles..."
   cd "$DOTPATH" && git pull && cd ~
@@ -170,7 +177,7 @@ fi
 # end
 
 # change def shell to fish
-sudo chsh -s /usr/bin/fish
+chsh -s /usr/bin/fish
 
 
 # # LunarVim
@@ -181,7 +188,7 @@ sudo chsh -s /usr/bin/fish
 
 
 # SpaceShip - https://spacevim.org/quick-start-guide/
-curl -sLf https://spacevim.org/install.sh | bash
+#curl -sLf https://spacevim.org/install.sh | bash
 
 
 # check WSL
