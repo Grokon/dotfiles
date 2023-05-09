@@ -76,4 +76,7 @@ bak/
 # Mac
 .DS_Store/
 
+# Tmux plugins
+.tmux/plugins/
+
 # End
