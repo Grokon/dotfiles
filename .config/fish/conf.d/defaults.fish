@@ -77,6 +77,13 @@ set -Ux PIPENV_VENV_IN_PROJECT 1
 set -Ux PYLINTHOME $XDG_CACHE_HOME/pylint
 set -gx PATH $HOME/.local/bin $PATH
 
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+if test -f $XDG_DATA_HOME/miniconda3/bin/conda
+  eval $XDG_DATA_HOME/miniconda3/bin/conda "shell.fish" "hook" $argv | source
+end
+# <<< conda initialize <<<
+
 # ruby
 set -Ux RBENV_ROOT $XDG_DATA_HOME/rbenv
 set -Ux GEM_SPEC_CACHE $XDG_CACHE_HOME/gem
