@@ -43,6 +43,27 @@ if type -q ansible
   set -Ux ANSIBLE_SSH_ARGS "-o ControlMaster=auto -o ControlPersist=60s -o ControlPath=/tmp/ansible-ssh-%h-%p-%r -o ForwardAgent=yes"
 end
 
+# kubectl
+if type -q kubectl
+  alias k="kubectl"
+end
+
+# homebrew (linux)
+if test -d /home/linuxbrew/.linuxbrew
+  set -gx HOMEBREW_NO_ANALYTICS 1
+	set -gx HOMEBREW_PREFIX "/home/linuxbrew/.linuxbrew"
+	set -gx HOMEBREW_CELLAR "$HOMEBREW_PREFIX/Cellar"
+	set -gx HOMEBREW_REPOSITORY "$HOMEBREW_PREFIX/Homebrew"
+
+  # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  set -gx PATH "$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin" $PATH
+
+  set -q MANPATH; or set MANPATH ''
+  set -gx MANPATH "$HOMEBREW_PREFIX/share/man" $MANPATH
+  set -q INFOPATH; or set INFOPATH ''
+  set -gx INFOPATH "$HOMEBREW_PREFIX/share/info" $INFOPATH
+end
+
 # docker
 #set -gx DOCKER_HOST tcp://localhost:2375
 
