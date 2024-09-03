@@ -33,51 +33,51 @@ echo "Now installing git and bash-completion... ccze - log colarised ... toilet 
 sudo apt-get install bash-completion ccze toilet lolcat zsh jq tmux fd-find exa bat ripgrep fzf make gcc g++ -y
 # latest neovim version
 if ! command -v nvim >/dev/null 2>&1; then
-	echo 'Installing neovim'
-	sudo add-apt-repository -y ppa:neovim-ppa/unstable
-	sudo apt-get install -y neovim
+  echo 'Installing neovim'
+  sudo add-apt-repository -y ppa:neovim-ppa/unstable
+  sudo apt-get install -y neovim
 fi
 # latest fish version
 if ! command -v fish >/dev/null 2>&1; then
-	echo 'Installing fish'
-	sudo apt-add-repository -y ppa:fish-shell/release-3
-	sudo apt-get install -y fish
+  echo 'Installing fish'
+  sudo apt-add-repository -y ppa:fish-shell/release-3
+  sudo apt-get install -y fish
 fi
 # latest git version
 if ! command -v git >/dev/null 2>&1; then
-	echo 'Installing git'
-	sudo add-apt-repository -y ppa:git-core/ppa
-	sudo apt-get install -y git
+  echo 'Installing git'
+  sudo add-apt-repository -y ppa:git-core/ppa
+  sudo apt-get install -y git
 fi
 
 # install docker
 if type -f docker >/dev/null; then
-	echo "docker is already installed"
+  echo "docker is already installed"
 else
-	echo "Installing docker..."
-	sudo mkdir -m 0755 -p /etc/apt/keyrings
-	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-	echo
-	# trunk-ignore(shellcheck/SC2312)
-	"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  echo "Installing docker..."
+  sudo mkdir -m 0755 -p /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  echo
+  # trunk-ignore(shellcheck/SC2312)
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
-	sudo apt-get update
-	sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-	sudo usermod -aG docker "${USER}"
+  sudo apt-get update
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  sudo usermod -aG docker "${USER}"
 fi
 
 # install nodejs
 if type -f node >/dev/null; then
-	echo "nodejs is already installed"
+  echo "nodejs is already installed"
 else
-	echo "Installing nodejs..."
-	curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-	sudo apt-get install -y nodejs
-	# install yarn
-	echo "Installing yarn..."
-	sudo npm i -g corepack
-	sudo corepack prepare yarn@stable --activate
-	sudo yarn set version stable
+  echo "Installing nodejs..."
+  curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+  # install yarn
+  echo "Installing yarn..."
+  sudo npm i -g corepack
+  sudo corepack prepare yarn@stable --activate
+  sudo yarn set version stable
 fi
 
 # install bash-completion
@@ -88,7 +88,7 @@ URL="https://raw.githubusercontent.com/git/git/v${GIT_VERSION}/contrib/completio
 echo ''
 echo "Downloading git-completion for git version: ${GIT_VERSION}..."
 if ! curl "${URL}" --silent --output "${HOME}/.git-completion.bash"; then
-	echo "ERROR: Couldn't download completion script. Make sure you have a working internet connection." && exit 1
+  echo "ERROR: Couldn't download completion script. Make sure you have a working internet connection." && exit 1
 fi
 
 # # install fzf
@@ -100,11 +100,11 @@ fi
 # isntall .dotfiles
 echo ''
 if [[ ! -d ${DOTPATH} ]]; then
-	echo "Cloning .dotfiles..."
-	git clone git@github.com:Grokon/dotfiles.git "${DOTPATH}"
+  echo "Cloning .dotfiles..."
+  git clone git@github.com:Grokon/dotfiles.git "${DOTPATH}"
 else
-	echo "Updating .dotfiles..."
-	cd "${DOTPATH}" && git pull && cd ~
+  echo "Updating .dotfiles..."
+  cd "${DOTPATH}" && git pull && cd ~
 fi
 
 # Create symlinks
@@ -112,60 +112,60 @@ echo ''
 echo "Now create symlinks..."
 
 :ask() {
-	echo -n ":: Press y to $1: "
-	read -r result </dev/tty
-	if [[ ${result} != "y" ]]; then
-		return 1
-	fi
+  echo -n ":: Press y to $1: "
+  read -r result </dev/tty
+  if [[ ${result} != "y" ]]; then
+    return 1
+  fi
 }
 
 cd "${DOTPATH}"
 for file in .??*; do
-	[[ ${file} == ".git" ]] && continue
-	[[ ${file} == ".DS_Store" ]] && continue
-	if [[ ${file} == ".bin" ]]; then
-		mkdir -p "${HOME}/bin"
-		find "${DOTPATH}/.bin/" -type f -perm 0755 -exec ln -fvns {} "${HOME}/bin/" \;
-		continue
-	fi
-	if [[ ${file} == ".config" ]]; then
-		find "${DOTPATH}/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "${XDG_CONFIG_HOME}/" \;
-		continue
-	fi
-	if [[ ${file} == ".gnupg" ]]; then
-		if [[ -L "${HOME}/${file}" ]]; then
-			ls -lah "${HOME}/${file}"
-			# trunk-ignore(shellcheck/SC2310)
-			if ! :ask "remove  ${HOME}/${file}"; then
-				echo "skipping"
-				continue
-			fi
-			rm -rf "${HOME}/${file:?}"
-		fi
-		mkdir -p "${HOME}/.gnupg"
-		chmod 700 "${HOME}/.gnupg"
-		find "${DOTPATH}/.gnupg" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "${HOME}/.gnupg" \;
-		continue
-	fi
-	if [[ ! -L "${HOME}/${file}" ]]; then
-		if [[ -f "${HOME}/${file}" ]]; then
-			ls -lah "${HOME}/${file}"
-			# trunk-ignore(shellcheck/SC2310)
-			if ! :ask "remove  ${HOME}/${file}"; then
-				echo "skipping"
-				continue
-			fi
-			rm -rf "${HOME}/${file:?}"
-		fi
-		ln -fvns "${DOTPATH}/${file}" "${HOME}/${file}"
-	fi
+  [[ ${file} == ".git" ]] && continue
+  [[ ${file} == ".DS_Store" ]] && continue
+  if [[ ${file} == ".bin" ]]; then
+    mkdir -p "${HOME}/bin"
+    find "${DOTPATH}/.bin/" -type f -perm 0755 -exec ln -fvns {} "${HOME}/bin/" \;
+    continue
+  fi
+  if [[ ${file} == ".config" ]]; then
+    find "${DOTPATH}/.config" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "${XDG_CONFIG_HOME}/" \;
+    continue
+  fi
+  if [[ ${file} == ".gnupg" ]]; then
+    if [[ -L "${HOME}/${file}" ]]; then
+      ls -lah "${HOME}/${file}"
+      # trunk-ignore(shellcheck/SC2310)
+      if ! :ask "remove  ${HOME}/${file}"; then
+        echo "skipping"
+        continue
+      fi
+      rm -rf "${HOME}/${file:?}"
+    fi
+    mkdir -p "${HOME}/.gnupg"
+    chmod 700 "${HOME}/.gnupg"
+    find "${DOTPATH}/.gnupg" -maxdepth 1 -mindepth 1 -exec ln -fvns {} "${HOME}/.gnupg" \;
+    continue
+  fi
+  if [[ ! -L "${HOME}/${file}" ]]; then
+    if [[ -f "${HOME}/${file}" ]]; then
+      ls -lah "${HOME}/${file}"
+      # trunk-ignore(shellcheck/SC2310)
+      if ! :ask "remove  ${HOME}/${file}"; then
+        echo "skipping"
+        continue
+      fi
+      rm -rf "${HOME}/${file:?}"
+    fi
+    ln -fvns "${DOTPATH}/${file}" "${HOME}/${file}"
+  fi
 done
 cd "${HOME}"
 
 # Tmux plugin magager install run after symlink
 if [[ ! -d "${HOME}/.tmux/plugins/tpm" ]]; then
-	git clone https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
-	"${HOME}"/.tmux/plugins/tpm/bin/install_plugins
+  git clone https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
+  "${HOME}"/.tmux/plugins/tpm/bin/install_plugins
 fi
 
 #######################################################
@@ -198,16 +198,30 @@ chsh -s /usr/bin/fish
 
 # check WSL
 if [[ -f /proc/version ]]; then
-	if grep -qi microsoft /proc/version; then
-		echo "WSL detected - add WSL parameters"
-		{
-			echo '[automount]'
-			echo 'options = "metadata,umask=22,fmask=11"'
-			echo ''
-			echo '# Set a command to run when a new WSL instance launches.'
-			echo '[boot]'
-			echo 'command = service docker start'
-		} | sudo tee /etc/wsl.conf
+  if grep -qi microsoft /proc/version; then
+    echo "WSL detected - add WSL parameters"
+    {
+      echo '[automount]'
+      echo 'options = "metadata,umask=22,fmask=11"'
+      echo ''
+      echo '# Set a command to run when a new WSL instance launches.'
+      echo '[boot]'
+      echo 'command = service docker start'
+    } | sudo tee /etc/wsl.conf
 
-	fi
+  fi
 fi
+
+# install latest version from repository
+# Fetch the latest sealed-secrets version using GitHub API
+#KUBESEAL_VERSION=$(curl -s https://api.github.com/repos/bitnami-labs/sealed-secrets/tags | jq -r '.[0].name' | cut -c 2-)
+
+# Check if the version was fetched successfully
+#if [ -z "$KUBESEAL_VERSION" ]; then
+#    echo "Failed to fetch the latest KUBESEAL_VERSION"
+#    exit 1
+#fi
+
+#curl -OL "https://github.com/bitnami-labs/sealed-secrets/releases/download/v${KUBESEAL_VERSION}/kubeseal-${KUBESEAL_VERSION}-linux-amd64.tar.gz"
+#tar -xvzf kubeseal-${KUBESEAL_VERSION}-linux-amd64.tar.gz kubeseal
+#sudo install -m 755 kubeseal /usr/local/bin/kubeseal

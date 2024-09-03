@@ -33,10 +33,6 @@
         diff = auto
         status = auto
         branch = auto
-
-[credential]
-        helper = cache --timeout=3600
-
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
@@ -46,7 +42,7 @@
         whitespace = nowarn
 
 [push]
-        default = current
+	default = simple
 
 [diff]
 	renames = copies
@@ -61,5 +57,5 @@
 
 [log]
         decorate = full
-[user]
-	name = Grokon
+[credential]
+	helper = store --file ~/.my-credentials
