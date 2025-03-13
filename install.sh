@@ -34,13 +34,13 @@ sudo apt-get install bash-completion ccze toilet lolcat zsh jq tmux fd-find exa 
 # latest neovim version
 if ! command -v nvim >/dev/null 2>&1; then
 	echo 'Installing neovim'
-	sudo add-apt-repository -y ppa:neovim-ppa/unstable
+	sudo add-apt-repository -y ppa:neovim-ppa/stable
 	sudo apt-get install -y neovim
 fi
 # latest fish version
 if ! command -v fish >/dev/null 2>&1; then
 	echo 'Installing fish'
-	sudo apt-add-repository -y ppa:fish-shell/release-3
+	sudo apt-add-repository -y ppa:fish-shell/release-4
 	sudo apt-get install -y fish
 fi
 # latest git version
