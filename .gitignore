@@ -60,7 +60,4 @@ ehthumbs_vista.db
 # Tmux plugins
 .tmux/plugins/
 
-# local
-.gitconfig.local
-
 # End
