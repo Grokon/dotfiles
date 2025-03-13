@@ -57,5 +57,5 @@
 
 [log]
         decorate = full
-[credential]
-	helper = store --file ~/.my-credentials
+# [credential]
+# 	helper = store --file ~/.my-credentials
