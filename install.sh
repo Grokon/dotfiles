@@ -182,6 +182,7 @@ fi
 # end
 
 # change def shell to fish
+echo "Change default shell to fish"
 sudo chsh -s /usr/bin/fish
 
 # # LunarVim
