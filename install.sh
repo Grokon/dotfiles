@@ -182,7 +182,7 @@ fi
 # end
 
 # change def shell to fish
-chsh -s /usr/bin/fish
+sudo chsh -s /usr/bin/fish
 
 # # LunarVim
 # if [ ! -d "$HOME/.config/nvim" ]; then
