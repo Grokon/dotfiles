@@ -30,7 +30,7 @@ echo "Updating package..."
 sudo apt-get update && sudo apt-get upgrade -y
 # Install packages
 echo "Now installing git and bash-completion... ccze - log colarised ... toilet - ascii-gen ..lolcat - color cut"
-sudo apt-get install bash-completion ccze toilet lolcat zsh jq tmux fd-find exa bat ripgrep fzf make gcc g++ -y
+sudo apt-get install bash-completion ccze toilet lolcat zsh jq tmux fd-find bat ripgrep fzf make gcc g++ -y
 # latest neovim version
 if ! command -v nvim >/dev/null 2>&1; then
 	echo 'Installing neovim'
@@ -71,7 +71,7 @@ if type -f node >/dev/null; then
 	echo "nodejs is already installed"
 else
 	echo "Installing nodejs..."
-	curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+	curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 	sudo apt-get install -y nodejs
 	# install yarn
 	echo "Installing yarn..."
