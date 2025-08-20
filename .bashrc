@@ -59,6 +59,10 @@ case "$LP_OS" in
     SunOS)   
 esac
 
+# Add homebrew to PATH
+if [[ -d /home/linuxbrew/.linuxbrew ]]; then
+    export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+fi
 
 # Set main editor
 if $(type nvim &> /dev/null); then 
@@ -458,15 +462,44 @@ alias lr='ll -R'           #  Recursive ls.
 alias la='ll -A'           #  Show hidden files.
 alias tree='tree -Csuh'    #  Nice alternative to 'recursive ls' ...
 
-# exa
-if [[ -x ~/bin/exa ]]; then 
-  alias ls="exa"
-  alias l="exa -a"
-  alias ll="exa -lgh"
-  alias la="exa -lagh"
-  alias lt="exa -T"
-  alias lg="exa -lagh --git"
-fi
+# eza (modern ls)
+if command -v eza > /dev/null
+    alias ls='eza --color=auto --group-directories-first'
+    alias ll='eza -l --color=auto --group-directories-first'
+    alias la='eza -la --color=auto --group-directories-first'
+    alias lt='eza --tree --color=auto'
+end
+
+# bat (modern cat)
+if command -v bat > /dev/null
+    alias cat='bat --style=auto'
+end
+
+# fd (modern find)
+if command -v fd > /dev/null
+    alias find='fd'
+end
+
+# dust (modern du)
+if command -v dust > /dev/null
+    alias du='dust'
+end
+
+# duf (modern df)
+if command -v duf > /dev/null
+    alias df='duf'
+end
+
+# procs (modern ps)
+if command -v procs > /dev/null
+    alias ps='procs'
+end
+
+
+# zoxide (smart cd)
+if command -v zoxide > /dev/null
+    zoxide init fish | source
+end
 
 #-------------------------------------------------------------
 # Tailoring 'less'
