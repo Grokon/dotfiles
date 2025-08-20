@@ -60,4 +60,7 @@ ehthumbs_vista.db
 # Tmux plugins
 .tmux/plugins/
 
+# Install log
+.install.log
+
 # End
