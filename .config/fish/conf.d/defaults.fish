@@ -165,3 +165,7 @@ set -U FZF_BASE_OPTS "--height $FZF_TMUX_HEIGHT --no-bold"
 # z
 set -gx Z_CMD "j"
 
+# ssh-agent test
+if not __ssh_agent_is_started
+  __ssh_agent_start
+end

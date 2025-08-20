@@ -796,14 +796,14 @@ fi
 
 # if your keys are not stored in ~/.ssh/id_rsa or ~/.ssh/id_dsa, you'll need
 # to paste the proper path after ssh-add
-if ! agent_is_running; then
-    agent_start
-    ssh-add
-elif ! agent_has_keys; then
-    ssh-add
-fi
+# if ! agent_is_running; then
+#     agent_start
+#     ssh-add
+# elif ! agent_has_keys; then
+#     ssh-add
+# fi
 
-unset SSH_ENV
+# unset SSH_ENV
 
 #-------------------------------------------------------------
 # FZF
