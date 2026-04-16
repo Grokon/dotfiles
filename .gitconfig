@@ -3,14 +3,10 @@
 
 [core]
         autocrlf = input
-        safecrlf = true
-        editor = vim
-        filemode = true
-	logallrefupdates = true
+	editor = code --wait
 
 [help]
-        autocorrect = 1
-        browser = gitscm
+        autocorrect = 10
 
 [alias]
         st = status
@@ -28,21 +24,16 @@
         show-names = show --name-only
 
 [color]
-        all = true
         ui = true
-        diff = auto
-        status = auto
-        branch = auto
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 	required = true
 
 [apply]
         whitespace = nowarn
 
-[push]
-	default = simple
 
 [diff]
 	renames = copies
@@ -51,11 +42,18 @@
 [difftool]
         prompt = false
 
-[browser "gitscm"]
-	cmd = /bin/sh -c 'open http://git-scm.com/docs/$(basename $1 .html)' --
-	protocol = https
+[init]
+        defaultBranch = main
+
+[pull]
+        rebase = false
 
 [log]
         decorate = full
-# [credential]
-# 	helper = store --file ~/.my-credentials
+
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential
