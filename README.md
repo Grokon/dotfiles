@@ -1,15 +1,31 @@
-# Readme ( )
+# Dotfiles
 
-Future request....
-!!! NOW ONLY FOR UBUNTU (WSL) !!!
+Current target: Ubuntu, primarily under WSL.
 
-## INSTALL
+## Status
 
-Via bash:
+- Primary interactive shell: Fish
+- Maintained bootstrap path: `install.sh`
+- Windows bootstrap scripts were removed; Windows setup is no longer automated from this repo
+- `wslgit/` is kept for the current Fork + WSL workflow
+
+## Install
 
 ```bash
 curl -sLf https://raw.githubusercontent.com/Grokon/dotfiles/master/install.sh | bash
 ```
+
+The installer currently handles:
+
+- base Ubuntu packages
+- Homebrew installation on Linux
+- modern CLI tools
+- Docker repository setup and installation
+- dotfile symlinks
+- tmux plugin manager
+- WSL-specific setup such as `wsl.conf` and `npiperelay`
+
+Review `install.sh` before running it on a new machine. It is intended for personal workstation bootstrap, not a generic distro-agnostic installer.
 
 ## [Z.lua cheat-sheet](https://github.com/skywind3000/z.lua)
 

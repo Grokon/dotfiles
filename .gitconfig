@@ -1,6 +1,10 @@
 [include]
         path = ~/.gitconfig.local
 
+[user]
+        # Uncomment after configuring identity per directory via includeIf in ~/.gitconfig.local
+        # useConfigOnly = true
+
 [core]
         autocrlf = input
 	editor = code --wait
@@ -66,6 +70,10 @@
 
 [pull]
         rebase = false
+        ff = only
+
+[fetch]
+        prune = true
 
 [log]
         decorate = full
