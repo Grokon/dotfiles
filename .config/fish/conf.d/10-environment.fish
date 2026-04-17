@@ -104,4 +104,3 @@ set -gx SSH_AUTH_SOCK $HOME/.ssh/agent.env.sock
 set -gx CCACHE_DIR $XDG_CACHE_HOME/ccache
 set -gx LIBVIRT_DEFAULT_URI qemu:///system
 set -gx HTTPIE_CONFIG_DIR $XDG_CONFIG_HOME/httpie
-set -gx Z_CMD j

@@ -179,11 +179,13 @@ install_modern_tools() {
         "neovim"
         "git"
         "jq"
+        "just"
         "ripgrep"
         "fd"
         "fzf"
         "bat"
         "tmux"
+        "k9s"
         "node@22"
         "fish"
         "eza"        # Modern replacement for ls

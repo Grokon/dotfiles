@@ -382,6 +382,23 @@ if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init bash)"
 fi
 
+# modern CLI tools
+if command -v lazygit >/dev/null 2>&1; then
+    alias lgit='lazygit'
+fi
+
+if command -v dust >/dev/null 2>&1; then
+    alias du='dust -r'
+fi
+
+if command -v duf >/dev/null 2>&1; then
+    alias df='duf'
+fi
+
+if command -v procs >/dev/null 2>&1; then
+    alias ps='procs'
+fi
+
 #-------------------------------------------------------------
 # Utility functions
 #-------------------------------------------------------------

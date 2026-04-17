@@ -1,24 +1,43 @@
-# Taken from: https://github.com/dideler/dotfiles/blob/master/functions/extract.fish
 function extract --description "Expand or extract bundled & compressed files"
-    set --local ext (echo $argv[1] | awk -F. '{print $NF}')
-    switch $ext
-        case tar # non-compressed, just bundled
-            tar -xvf $argv[1]
-        case gz
-            if test (echo $argv[1] | awk -F. '{print $(NF-1)}') = tar # tar bundle compressed with gzip
-                tar -zxvf $argv[1]
-            else # single gzip
-                gunzip $argv[1]
-            end
-        case tgz # same as tar.gz
-            tar -zxvf $argv[1]
-        case bz2 # tar compressed with bzip2
-            tar -jxvf $argv[1]
-        case rar
-            unrar x $argv[1]
-        case zip
-            unzip $argv[1]
-        case '*'
-            echo "unknown extension"
+    for file in $argv
+        if not test -f "$file"
+            echo "'$file' is not a valid file" >&2
+            continue
+        end
+
+        switch "$file"
+            case '*.tar.bz2' '*.tbz2'
+                tar xvjf "$file"
+            case '*.tar.gz' '*.tgz'
+                tar xvzf "$file"
+            case '*.tar.xz' '*.txz'
+                tar xvJf "$file"
+            case '*.tar.zst' '*.tzst'
+                tar --use-compress-program=unzstd -xvf "$file"
+            case '*.tar.lz4'
+                lz4 -d "$file" -c | tar xvf -
+            case '*.tar'
+                tar xvf "$file"
+            case '*.bz2'
+                bunzip2 "$file"
+            case '*.gz'
+                gunzip "$file"
+            case '*.xz'
+                xz -d "$file"
+            case '*.zst'
+                unzstd "$file"
+            case '*.lz4'
+                lz4 -d "$file"
+            case '*.zip'
+                unzip "$file"
+            case '*.rar'
+                unrar x "$file"
+            case '*.7z'
+                7z x "$file"
+            case '*.Z'
+                uncompress "$file"
+            case '*'
+                echo "'$file' cannot be extracted via extract()" >&2
+        end
     end
 end
