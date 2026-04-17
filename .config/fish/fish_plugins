@@ -1,8 +1,9 @@
 jorgebucaran/fisher
 franciscolourenco/done
-evanlucas/fish-kubectl-completions
-jethrokuan/z
 PatrickF1/fzf.fish
 edc/bass
-ilancosman/tide@v5
-gazorby/fish-abbreviation-tips
+IlanCosman/tide@v6
+jorgebucaran/autopair.fish
+meaningful-ooo/sponge
+nickeb96/puffer-fish
+patrickf1/colored_man_pages.fish

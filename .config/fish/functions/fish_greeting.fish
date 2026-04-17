@@ -7,7 +7,7 @@ function fish_greeting
     if test -d /run/WSL
       set -f line1 (uname --kernel-name)" - WSL 2"
     else 
-      set -f line1 '(uname --kernel-name)'
+      set -f line1 (uname --kernel-name)
     end
     echo "                 ___"
     echo "   ___======____=---=)                  "
